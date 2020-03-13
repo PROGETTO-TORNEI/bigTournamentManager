@@ -32,7 +32,7 @@ namespace bigTournamentManager
 
             bool finalphase = false;
 
-            //tournament.generateTurn(finalphase);
+            //tournament.generateTurn(finalphase); ?
             
         }
     }
