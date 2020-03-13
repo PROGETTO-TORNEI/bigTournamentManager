@@ -1,0 +1,22 @@
+﻿<Window x:Class="bigTournamentManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bigTournamentManager"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label x:Name="lbl1" Content="Nome" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl2" Content="Indirizzo" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl" Content="Gioco" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl4" Content="Data" HorizontalAlignment="Left" Margin="10,193,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chb1" Content="Torneo a squadre" HorizontalAlignment="Left" Margin="10,270,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbName" HorizontalAlignment="Left" Height="25" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135"/>
+        <TextBox x:Name="txbAddress" HorizontalAlignment="Left" Height="25" Margin="10,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135"/>
+        <TextBox x:Name="txbGame" HorizontalAlignment="Left" Height="25" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135"/>
+        <DatePicker HorizontalAlignment="Left" Margin="10,224,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
