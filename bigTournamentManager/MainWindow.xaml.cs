@@ -32,9 +32,7 @@ namespace bigTournamentManager
 
             bool finalphase = false;
 
-            tournament.generateTurn(finalphase);
-
-            tournament.currentTurn.svizzera();
+            //tournament.generateTurn(finalphase);
             
         }
     }

@@ -29,7 +29,7 @@ namespace bigTournamentManager
             this.roundNumber = 0;
         }
         
-        public bool generateTurn(bool finalphase) {
+        /*public bool generateTurn(bool finalphase) {
             if (finalphase)
             {
                 this.currentTurn = new FinalPhaseTurn(this.listPlayers,this.roundNumber);
@@ -39,7 +39,7 @@ namespace bigTournamentManager
                 this.currentTurn = new QualificationTurn(this.listPlayers,this.roundNumber);
             }
             return true;
-        }
+        }*/
 
         
     }
