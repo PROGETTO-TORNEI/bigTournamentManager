@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    class Player
+    public class Player
     {
         private String name;
         private String lastName;
+        private String nickname;
         private String mail;
 
+        public Player(){}
+
+        public Player(string nickname)
+        {
+            this.nickname = nickname;
+        }
     }
+
+
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    abstract class Turn
+    public abstract class Turn
     {             
         protected Boolean italianRound;
         protected int tablePlayersNumber;

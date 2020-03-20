@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    class QualificationTurn : Turn
+    public class QualificationTurn : Turn
     {
         private int qualifiedPlayersNumber;
 

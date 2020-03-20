@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    class Tournament
+    public class Tournament
     {
         private String name;
         private String address;

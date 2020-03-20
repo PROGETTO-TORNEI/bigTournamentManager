@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    class Table
+    public class Table
     {
         private LinkedList<Player> players;
         private int tableNumber;

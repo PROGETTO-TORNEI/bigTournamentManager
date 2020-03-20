@@ -17,23 +17,40 @@ namespace bigTournamentManager
 {
     public partial class MainWindow : Window
     {
+        private LinkedList<Player> listPlayers = new LinkedList<Player>();
+        public Tournament tournament;
+        private String name;
+        private String address;
+        private String game;
+        private DateTime date;
+        private bool teams;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
             //predo dati da form
-            String name = txbName.DataContext.ToString();
-            String address = txbAddress.DataContext.ToString();
-            String game = txbGame.DataContext.ToString();
-            DateTime datetime = new DateTime();
-            LinkedList<Player> listPlayers = new LinkedList<Player>();
-            bool teams = false;
+            this.name = txbName.Text;
+            this.address = txbAddress.Text;
+            this.game = txbGame.Text;
+            this.date = dpkData.DisplayDate;
 
-            Tournament tournament = new Tournament(name, address, game, datetime, teams, listPlayers);
+            this.teams = (bool) chb1.IsChecked;
 
-            bool finalphase = false;
+            this.tournament = new Tournament(name, address, game, date, teams, listPlayers);           
 
-            //tournament.generateTurn(finalphase); ?
-            
+            TurnsWindow win = new TurnsWindow(tournament);
+            win.Show();
+
+        }
+
+        private void btnAddPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            String player = txbPlayer.Text;
+            listPlayers.AddLast(new Player(player));
         }
     }
 }
