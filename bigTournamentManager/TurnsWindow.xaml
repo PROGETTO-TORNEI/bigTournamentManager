@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bigTournamentManager"
         mc:Ignorable="d"
-        Title="TurnsWindow" Height="450" Width="800">
+        Title="TurnsWindow" Height="280" Width="800">
     <Grid>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="100,80,0,0" VerticalAlignment="Top"/>
-
+        <Label x:Name="lbl1" Content="Numero giocatori per tavolo" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbPlayersNumber" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250"/>
+        <ListBox x:Name="ltb1" HorizontalAlignment="Left" Height="135" Margin="302,41,0,0" VerticalAlignment="Top" Width="480"/>
+        <CheckBox x:Name="chb1" Content="Turno all'italiana" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnBack" Content="Indietro" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="115" Height="35"/>
+        <Label x:Name="lbl2" Content="Turni" HorizontalAlignment="Left" Margin="302,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnAddTurn" Content="Inserisci turno" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="250" Click="btnAddTurn_Click" Height="35"/>
+        <Button x:Name="btnShowTurn" Content="Visualizza turno" HorizontalAlignment="Left" Margin="667,181,0,0" VerticalAlignment="Top" Width="115" Height="35" Click="btnShowTurn_Click"/>
     </Grid>
 </Window>

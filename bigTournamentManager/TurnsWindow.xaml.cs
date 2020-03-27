@@ -29,5 +29,23 @@ namespace bigTournamentManager
 
             bool finalphase = false;
         }
+
+        private void btnAddTurn_Click(object sender, RoutedEventArgs e)
+        {           
+            int tablePlayersNumber = Int32.Parse(txbPlayersNumber.Text);
+            bool italianRound = (bool)chb1.IsChecked;
+
+            Turn turn = new Turn(italianRound, tablePlayersNumber, this.tournament.getListPlayers(), this.tournament.nextRoundNumber());
+            ltb1.Items.Add(turn);
+        }
+
+        private void btnShowTurn_Click(object sender, RoutedEventArgs e)
+        {
+            if (ltb1.SelectedItem != null)
+            {
+                TablesWindow win = new TablesWindow(/**/);
+                win.Show();
+            }
+        }
     }
 }

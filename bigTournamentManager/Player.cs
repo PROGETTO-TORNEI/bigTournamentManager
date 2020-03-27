@@ -19,6 +19,11 @@ namespace bigTournamentManager
         {
             this.nickname = nickname;
         }
+
+        public override string ToString()
+        {
+            return this.nickname;
+        }
     }
 
 

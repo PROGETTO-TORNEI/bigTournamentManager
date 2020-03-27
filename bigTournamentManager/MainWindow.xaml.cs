@@ -40,9 +40,9 @@ namespace bigTournamentManager
 
             this.teams = (bool) chb1.IsChecked;
 
-            this.tournament = new Tournament(name, address, game, date, teams, listPlayers);           
+            this.tournament = new Tournament(this.name, this.address, this.game, this.date, this.teams, this.listPlayers);           
 
-            TurnsWindow win = new TurnsWindow(tournament);
+            TurnsWindow win = new TurnsWindow(this.tournament);
             win.Show();
 
         }
@@ -50,7 +50,8 @@ namespace bigTournamentManager
         private void btnAddPlayer_Click(object sender, RoutedEventArgs e)
         {
             String player = txbPlayer.Text;
-            listPlayers.AddLast(new Player(player));
+            this.listPlayers.AddLast(new Player(player));
+            ltb1.Items.Add(player);
         }
     }
 }

@@ -27,21 +27,19 @@ namespace bigTournamentManager
             this.listPlayers = listPlayers;
             this.currentTurn = null;
             this.roundNumber = 0;
+        }        
+        
+        public LinkedList<Player> getListPlayers()
+        {
+            return this.listPlayers;
         }
-        
-        /*public bool generateTurn(bool finalphase) {
-            if (finalphase)
-            {
-                this.currentTurn = new FinalPhaseTurn(this.listPlayers,this.roundNumber);
-            }
-            else
-            {
-                this.currentTurn = new QualificationTurn(this.listPlayers,this.roundNumber);
-            }
-            return true;
-        }*/
 
-        
+        public int nextRoundNumber()
+        {
+            this.roundNumber=+1;
+            return this.roundNumber;
+        }
+
     }
 
 }

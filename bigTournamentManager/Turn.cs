@@ -6,27 +6,31 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    public abstract class Turn
+    public class Turn
     {             
         protected Boolean italianRound;
         protected int tablePlayersNumber;
         protected LinkedList<Player> listPlayers;
         protected LinkedList<Table> listTable;
         protected int roundNumber;
+        private int qualifiedPlayersNumber;
 
         public Turn(bool italianRound, int tablePlayersNumber, LinkedList<Player> listPlayers, int roundNumber)
         {
             this.italianRound = italianRound;
             this.tablePlayersNumber = tablePlayersNumber;
             this.listPlayers = listPlayers;
-            this.roundNumber = roundNumber;
+            this.roundNumber = roundNumber;            
         }
 
-        public abstract bool generateTables();
+        public bool generateTables()
+        {
+            throw new NotImplementedException();
+        }
 
         protected bool svizzera() {
 
-            if (this.roundNumber == 0) {
+            if (this.roundNumber == 1) {
                 this.shuffleList();
             }
 
@@ -62,5 +66,9 @@ namespace bigTournamentManager
             return this.listPlayers;
         }
 
+        public override string ToString()
+        {
+            return "Turno " + this.roundNumber + ": " +  this.tablePlayersNumber + " giocatori";
+        }
     }
 }
