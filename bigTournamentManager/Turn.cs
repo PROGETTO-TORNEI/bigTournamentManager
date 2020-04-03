@@ -8,11 +8,11 @@ namespace bigTournamentManager
 {
     public class Turn
     {             
-        protected Boolean italianRound;
-        protected int tablePlayersNumber;
-        protected LinkedList<Player> listPlayers;
-        protected LinkedList<Table> listTable;
-        protected int roundNumber;
+        private Boolean italianRound;
+        private int tablePlayersNumber;
+        private LinkedList<Player> listPlayers;
+        private LinkedList<Table> listTables;
+        private int roundNumber;
         private int qualifiedPlayersNumber;
 
         public Turn(bool italianRound, int tablePlayersNumber, LinkedList<Player> listPlayers, int roundNumber)
@@ -20,15 +20,16 @@ namespace bigTournamentManager
             this.italianRound = italianRound;
             this.tablePlayersNumber = tablePlayersNumber;
             this.listPlayers = listPlayers;
-            this.roundNumber = roundNumber;            
+            this.roundNumber = roundNumber;
+            this.listPlayers = null;
         }
 
-        public bool generateTables()
+        public LinkedList<Table> getListTables()
         {
-            throw new NotImplementedException();
+            return this.listTables;
         }
 
-        protected bool svizzera() {
+        public bool svizzera() {
 
             if (this.roundNumber == 1) {
                 this.shuffleList();
@@ -37,21 +38,27 @@ namespace bigTournamentManager
             IEnumerator<Player> en = this.listPlayers.GetEnumerator();
 
             bool exit = false;
+            int c = 1;
 
             while (!exit)
             {
-                Table table = new Table();
+                Table table = new Table(c);
+                c++;
                 for (int i = 0; i < this.tablePlayersNumber; i++)
                 {
                     if (en.MoveNext())
-                        table.addPlayer(en.Current);
+                    {
+                        Player p = en.Current;
+                        table.addPlayer(p);
+                    }
                     else
                     {
-                        table.addPlayer(new Player());
+                        Player ghost = new Player();
+                        table.addPlayer(ghost);
                         exit = true;
                     }
                 }
-                this.listTable.AddLast(table);
+                this.listTables.AddLast(table);
             }
             
             return true;
@@ -59,10 +66,11 @@ namespace bigTournamentManager
 
         protected LinkedList<Player> shuffleList() {
             Random Rand = new Random();
-            this.listPlayers = new LinkedList<Player>(this.listPlayers.OrderBy((o) =>
+            LinkedList<Player> nl = new LinkedList<Player>(this.listPlayers.OrderBy((o) =>
             {
                 return (Rand.Next() % this.listPlayers.Count);
             }));
+            this.listPlayers = nl;
             return this.listPlayers;
         }
 

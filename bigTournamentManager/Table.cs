@@ -11,17 +11,20 @@ namespace bigTournamentManager
         private LinkedList<Player> players;
         private int tableNumber;
 
-        public Table() { }
-
-        public Table(LinkedList<Player> players, int tableNumber)
+        public Table(int tableNumber)
         {
-            this.players = players;
+            this.players = new LinkedList<Player>();
             this.tableNumber = tableNumber;
         }
 
         public void addPlayer(Player player)
         {
             this.players.AddLast(player);
+        }
+
+        public override string ToString()
+        {
+            return "Tavolo " + this.tableNumber;
         }
     }
 }

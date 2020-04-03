@@ -19,9 +19,25 @@ namespace bigTournamentManager
     /// </summary>
     public partial class TablesWindow : Window
     {
-        public TablesWindow()
+        public Tournament tournament;
+        public Turn turn;
+
+        public TablesWindow(Tournament t, Turn si)
         {
             InitializeComponent();
+
+            this.tournament = t;
+            this.turn = si;
+            lbx1.ItemsSource = this.turn.getListTables();
+
+            cbx1.ItemsSource = this.turn.getListTables();
+
+            //fai vedere solo turno selez
+        }
+
+        private void cbx1_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            //fai vedere solo turno selez
         }
     }
 }

@@ -27,7 +27,7 @@ namespace bigTournamentManager
 
             this.tournament = t;
 
-            bool finalphase = false;
+            //bool finalphase = false;
         }
 
         private void btnAddTurn_Click(object sender, RoutedEventArgs e)
@@ -36,6 +36,7 @@ namespace bigTournamentManager
             bool italianRound = (bool)chb1.IsChecked;
 
             Turn turn = new Turn(italianRound, tablePlayersNumber, this.tournament.getListPlayers(), this.tournament.nextRoundNumber());
+            turn.svizzera();
             ltb1.Items.Add(turn);
         }
 
@@ -43,7 +44,7 @@ namespace bigTournamentManager
         {
             if (ltb1.SelectedItem != null)
             {
-                TablesWindow win = new TablesWindow(/**/);
+                TablesWindow win = new TablesWindow(this.tournament, (Turn)ltb1.SelectedItem);
                 win.Show();
             }
         }

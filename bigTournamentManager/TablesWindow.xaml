@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bigTournamentManager"
         mc:Ignorable="d"
-        Title="TablesWindow" Height="450" Width="800">
+        Title="TablesWindow" Height="280" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="61*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lbl1" Content="Punteggio" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txb1" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnInsertPoints" Content="Inserisci punteggio" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="250" Grid.ColumnSpan="2"/>
+        <ListBox x:Name="lbx1" HorizontalAlignment="Left" Height="135" Margin="181,65,0,0" VerticalAlignment="Top" Width="480" Grid.Column="1"/>
+        <Button x:Name="btnSavePoints" Content="Salva punteggi" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Width="250" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnBack" Content="Indietro" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="115" Height="35" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="cbx1" Grid.Column="1" HorizontalAlignment="Left" Margin="181,24,0,0" VerticalAlignment="Top" Width="480" DataContextChanged="cbx1_DataContextChanged"/>
+
     </Grid>
 </Window>
