@@ -37,5 +37,12 @@ namespace bigTournamentManager
             Table selectedTable = (Table)cbx1.SelectedItem;
             lbx1.ItemsSource = selectedTable.getPlayers();
         }
+
+        private void btnInsertPoints_Click(object sender, RoutedEventArgs e)
+        {
+            Player player = (Player)lbx1.SelectedItem;
+            player.setPoints(Int32.Parse(txb1.Text));
+            //AGGIORNAMENTO LISTA GIOCATORI
+        }
     }
 }

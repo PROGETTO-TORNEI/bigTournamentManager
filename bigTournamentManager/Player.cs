@@ -12,6 +12,7 @@ namespace bigTournamentManager
         private String lastName;
         private String nickname;
         private String mail;
+        private int points;
 
         public Player(){}
 
@@ -20,9 +21,14 @@ namespace bigTournamentManager
             this.nickname = nickname;
         }
 
+        public void setPoints(int p)
+        {
+            this.points = p;
+        }
+
         public override string ToString()
         {
-            return this.nickname;
+            return this.nickname + ": " + this.points + " points";
         }
     }
 

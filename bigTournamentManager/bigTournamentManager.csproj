@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Player.cs" />
+    <Compile Include="SingletonDBMS.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="TablesWindow.xaml.cs">
       <DependentUpon>TablesWindow.xaml</DependentUpon>
