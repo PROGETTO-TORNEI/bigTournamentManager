@@ -21,7 +21,7 @@ namespace bigTournamentManager
             this.tablePlayersNumber = tablePlayersNumber;
             this.listPlayers = listPlayers;
             this.roundNumber = roundNumber;
-            this.listPlayers = null;
+            this.listTables = new LinkedList<Table>();
         }
 
         public LinkedList<Table> getListTables()
@@ -36,14 +36,18 @@ namespace bigTournamentManager
             }
 
             IEnumerator<Player> en = this.listPlayers.GetEnumerator();
+        
+            int nTables = 0;
+            int c = 0;
 
-            bool exit = false;
-            int c = 1;
+            do {
+                nTables++;
+                c += this.tablePlayersNumber;
+            } while (c < this.listPlayers.Count());      
 
-            while (!exit)
+            for(int l = 0; l < nTables; l++)
             {
-                Table table = new Table(c);
-                c++;
+                Table table = new Table(l);
                 for (int i = 0; i < this.tablePlayersNumber; i++)
                 {
                     if (en.MoveNext())
@@ -55,7 +59,6 @@ namespace bigTournamentManager
                     {
                         Player ghost = new Player();
                         table.addPlayer(ghost);
-                        exit = true;
                     }
                 }
                 this.listTables.AddLast(table);

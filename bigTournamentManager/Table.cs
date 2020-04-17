@@ -22,6 +22,11 @@ namespace bigTournamentManager
             this.players.AddLast(player);
         }
 
+        public LinkedList<Player> getPlayers()
+        {
+            return this.players;
+        }
+
         public override string ToString()
         {
             return "Tavolo " + this.tableNumber;

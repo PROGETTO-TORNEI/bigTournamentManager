@@ -27,17 +27,15 @@ namespace bigTournamentManager
             InitializeComponent();
 
             this.tournament = t;
-            this.turn = si;
-            lbx1.ItemsSource = this.turn.getListTables();
+            this.turn = si;           
 
             cbx1.ItemsSource = this.turn.getListTables();
-
-            //fai vedere solo turno selez
         }
 
-        private void cbx1_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void cbx1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //fai vedere solo turno selez
+            Table selectedTable = (Table)cbx1.SelectedItem;
+            lbx1.ItemsSource = selectedTable.getPlayers();
         }
     }
 }
