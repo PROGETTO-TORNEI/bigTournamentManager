@@ -19,16 +19,23 @@ namespace bigTournamentManager
 
         public Tournament(string name, string game, string address, DateTime date, bool teams, LinkedList<Player> listPlayers)
         {
-            this.name = name;
-            this.game = game;
-            this.address = address;
-            this.date = date;
+            this.Name = name;
+            this.Game = game;
+            this.Address = address;
+            this.Date = date;
             this.teams = teams;
             this.listPlayers = listPlayers;
             this.currentTurn = null;
             this.roundNumber = 0;
-        }        
-        
+        }
+
+        public string Name { get => name; set => name = value; }
+        public string Address { get => address; set => address = value; }
+        public string Game { get => game; set => game = value; }
+        public DateTime Date { get => date; set => date = value; }
+
+
+
         public LinkedList<Player> getListPlayers()
         {
             return this.listPlayers;

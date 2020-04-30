@@ -46,7 +46,7 @@ namespace db_big_scuola
                                         "END;\n";
             string sqlCreateTables = "USE db_big_scuola; \n" +
                                     "CREATE TABLE games( " +
-                                        "id                     INT             NOT NULL, " +
+                                        "id                     INT             NOT NULL    IDENTITY, " +
                                         "name                   VARCHAR(100)    NOT NULL, " +
                                         "single_league          INT             NULL, " +
                                         "game_in_the_ranking    INT             NOT NULL, " +
@@ -55,24 +55,24 @@ namespace db_big_scuola
                                     " );\n" +
 
                                     "CREATE TABLE tournaments( " +
-                                        "id             INT             NOT NULL IDENTITY, " +
+                                        "id             INT             NOT NULL    IDENTITY, " +
                                         "id_game        INT             NOT NULL, " +
                                         "data_hour      DATETIME        NOT NULL, " +
                                         "name           VARCHAR(100)    NOT NULL, " +
                                         "online         SMALLINT        NULL, " +
                                         "players_n      INT             NOT NULL, " +
-                                        "description    TEXT            NOT NULL, " +
-                                        "progressive    INT             NOT NULL, " +
-                                        "final          BIT             NOT NULL, " +
+                                        "description    TEXT            NULL, " +
+                                        "progressive    INT             NULL, " +
+                                        "final          BIT             NOT NULL DEFAULT 0, " +
                                         "address        VARCHAR(205)    NOT NULL, " +
                                         "PRIMARY KEY (id), " +
                                         "CONSTRAINT [FK_tournaments_games] FOREIGN KEY ([id_game]) REFERENCES [dbo].[games] ([id])" +
                                     " );\n" +
 
                                     "CREATE TABLE tables( " +
-                                        "id             INT             NOT NULL, " +
+                                        "id             INT             NOT NULL    IDENTITY, " +
                                         "id_tournament  INT             NOT NULL, " +
-                                        "progressive_n  INT             NOT NULL, " +
+                                        "progressive_n  INT             NULL, " +
                                         "players_n      INT             NOT NULL, " +
                                         "turn           INT             NOT NULL, " +
                                         "PRIMARY KEY (id), " +
@@ -80,7 +80,7 @@ namespace db_big_scuola
                                     " );\n" +
 
                                     "CREATE TABLE players( " +
-                                        "id             INT             NOT NULL, " +
+                                        "id             INT             NOT NULL    IDENTITY, " +
                                         "nickname       VARCHAR(100)    NOT NULL, " +
                                         "firstname      VARCHAR(200)    NOT NULL, " +
                                         "lastname       VARCHAR(200)    NOT NULL, " +
@@ -104,6 +104,7 @@ namespace db_big_scuola
                                     "CREATE TABLE compositions( " +
                                         "id_table       INT             NOT NULL, " +
                                         "id_player      INT             NOT NULL, " +
+                                        "punteggio      FLOAT           NULL" +
                                         "PRIMARY KEY (id_table, id_player), " +
                                         "CONSTRAINT[FK_compositions_players] FOREIGN KEY([id_player]) REFERENCES[dbo].[players]([id]), " +
                                         "CONSTRAINT[FK_compositions_tables] FOREIGN KEY([id_table]) REFERENCES[dbo].[tables]([id])" +
@@ -116,6 +117,32 @@ namespace db_big_scuola
             command = new SqlCommand(sqlCreateTables, myConnection);
             command.ExecuteNonQuery();
             myConnection.Close();
+        }
+
+        public bool CreateNewTournament(bigTournamentManager.Tournament t)
+        {
+            bool success = false;
+            String sqlQuery = "INSERT INTO tournaments(id_game, data_hour, name, players_n, address) " +
+                              "VALUES (" + GetGame(t.Game) + ", \"" + GetDataHourString(t.Date) + "\", \"" + t.Name + "\"," + t.getListPlayers().Count + " \"" + t.Address + " )";
+
+
+
+            return success;
+        }
+
+        private String GetDataHourString(DateTime date)
+        {
+            String str = "";
+            return str;
+        }
+
+        private int GetGame(String nameGame)
+        {
+            int id = 0;
+
+
+
+            return id;
         }
 
     }
