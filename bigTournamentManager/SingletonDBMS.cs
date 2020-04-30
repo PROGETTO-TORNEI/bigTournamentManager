@@ -132,7 +132,7 @@ namespace db_big_scuola
 
         private String GetDataHourString(DateTime date)
         {
-            String str = "";
+            String str = " ";
             return str;
         }
 
