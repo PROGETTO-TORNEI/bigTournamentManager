@@ -55,7 +55,7 @@ namespace db_big_scuola
                                     " );\n" +
 
                                     "CREATE TABLE tournaments( " +
-                                        "id             INT             NOT NULL, " +
+                                        "id             INT             NOT NULL IDENTITY, " +
                                         "id_game        INT             NOT NULL, " +
                                         "data_hour      DATETIME        NOT NULL, " +
                                         "name           VARCHAR(100)    NOT NULL, " +
