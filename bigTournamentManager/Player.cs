@@ -21,6 +21,11 @@ namespace bigTournamentManager
             this.nickname = nickname;
         }
 
+        public int getPoints()
+        {
+            return this.points;
+        }
+
         public void setPoints(int p)
         {
             this.points = p;

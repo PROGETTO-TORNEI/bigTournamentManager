@@ -29,6 +29,11 @@ namespace bigTournamentManager
             this.roundNumber = 0;
         }        
         
+        public void setCurrentTurn(Turn t)
+        {
+            this.currentTurn = t;
+        }
+
         public LinkedList<Player> getListPlayers()
         {
             return this.listPlayers;
@@ -36,7 +41,7 @@ namespace bigTournamentManager
 
         public int nextRoundNumber()
         {
-            this.roundNumber=+1;
+            this.roundNumber++;
             return this.roundNumber;
         }
 

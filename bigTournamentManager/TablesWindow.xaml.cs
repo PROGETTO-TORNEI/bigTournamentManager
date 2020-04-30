@@ -42,7 +42,12 @@ namespace bigTournamentManager
         {
             Player player = (Player)lbx1.SelectedItem;
             player.setPoints(Int32.Parse(txb1.Text));
-            //AGGIORNAMENTO LISTA GIOCATORI
+            lbx1.Items.Refresh();
+        }
+
+        private void btnSavePoints_Click(object sender, RoutedEventArgs e)
+        {
+            //salva punteggio su db
         }
     }
 }

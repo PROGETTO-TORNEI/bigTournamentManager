@@ -31,13 +31,18 @@ namespace bigTournamentManager
         }
 
         private void btnAddTurn_Click(object sender, RoutedEventArgs e)
-        {           
+        {
+            this.loadLastTurn();
+
             int tablePlayersNumber = Int32.Parse(txbPlayersNumber.Text);
-            bool italianRound = (bool)chb1.IsChecked;
+            bool italianRound = (bool)chb1.IsChecked;            
 
             Turn turn = new Turn(italianRound, tablePlayersNumber, this.tournament.getListPlayers(), this.tournament.nextRoundNumber());
             turn.svizzera();
             ltb1.Items.Add(turn);
+            this.tournament.setCurrentTurn(turn);
+
+            //salvo turno su db
         }
 
         private void btnShowTurn_Click(object sender, RoutedEventArgs e)
@@ -47,6 +52,12 @@ namespace bigTournamentManager
                 TablesWindow win = new TablesWindow(this.tournament, (Turn)ltb1.SelectedItem);
                 win.Show();
             }
+        }
+
+        private bool loadLastTurn()
+        {
+
+            return true;
         }
     }
 }

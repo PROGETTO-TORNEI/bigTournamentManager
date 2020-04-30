@@ -29,7 +29,7 @@ namespace bigTournamentManager
 
         public override string ToString()
         {
-            return "Tavolo " + this.tableNumber;
+            return "Tavolo " + (this.tableNumber+1);
         }
     }
 }

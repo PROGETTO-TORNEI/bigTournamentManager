@@ -34,6 +34,10 @@ namespace bigTournamentManager
             if (this.roundNumber == 1) {
                 this.shuffleList();
             }
+            else
+            {
+                this.sortList();
+            }
 
             IEnumerator<Player> en = this.listPlayers.GetEnumerator();
         
@@ -67,14 +71,38 @@ namespace bigTournamentManager
             return true;
         }
 
-        protected LinkedList<Player> shuffleList() {
+        protected bool shuffleList() {
             Random Rand = new Random();
             LinkedList<Player> nl = new LinkedList<Player>(this.listPlayers.OrderBy((o) =>
             {
                 return (Rand.Next() % this.listPlayers.Count);
             }));
             this.listPlayers = nl;
-            return this.listPlayers;
+            return true;
+        }
+
+        protected bool sortList()
+        {
+            LinkedList<Player> newListPlayers = new LinkedList<Player>();
+
+            IEnumerator<Player> en = this.listPlayers.GetEnumerator();            
+
+            for (int l = 0; l < this.tablePlayersNumber; l++) {
+                int maxpts = 0;
+                for (int i = 0; i < this.tablePlayersNumber; i++)
+                {                    
+                    if (en.MoveNext()) {
+                        Player p = en.Current;
+                        if (p.getPoints() >= maxpts) {                            
+                            newListPlayers.AddLast(p);
+                            maxpts = p.getPoints();
+                        }
+                    }
+                }
+            }
+            this.listPlayers = newListPlayers;
+
+            return true;
         }
 
         public override string ToString()

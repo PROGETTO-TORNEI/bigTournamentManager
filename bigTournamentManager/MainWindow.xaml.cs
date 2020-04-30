@@ -38,13 +38,14 @@ namespace bigTournamentManager
             this.game = txbGame.Text;
             this.date = dpkData.DisplayDate;
 
-            this.teams = (bool) chb1.IsChecked;
+            this.teams = (bool) chb1.IsChecked;            
 
-            this.tournament = new Tournament(this.name, this.address, this.game, this.date, this.teams, this.listPlayers);           
+            this.tournament = new Tournament(this.name, this.address, this.game, this.date, this.teams, this.listPlayers);
+
+            //salvataggio torneo su db
 
             TurnsWindow win = new TurnsWindow(this.tournament);
             win.Show();
-
         }
 
         private void btnAddPlayer_Click(object sender, RoutedEventArgs e)
