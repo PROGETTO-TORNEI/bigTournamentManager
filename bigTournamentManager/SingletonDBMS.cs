@@ -159,6 +159,7 @@ namespace bigTournamentManager
             SqlCommand command;
             bool success = true;
 
+
             //Query per la creazione del torneo all'interno del DB
             String sqlCreateT = "INSERT INTO tournaments(id_game, data_hour, name, players_n, address) " +
                                     "VALUES( " + 
