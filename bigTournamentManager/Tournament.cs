@@ -19,10 +19,10 @@ namespace bigTournamentManager
 
         public Tournament(string name, string game, string address, DateTime date, bool teams, LinkedList<Player> listPlayers)
         {
-            this.Name = name;
-            this.Game = game;
-            this.Address = address;
-            this.Date = date;
+            this.name = name;
+            this.game = game;
+            this.address = address;
+            this.date = date;
             this.teams = teams;
             this.listPlayers = listPlayers;
             this.currentTurn = null;

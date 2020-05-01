@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace db_big_scuola
+namespace bigTournamentManager
 {
     public sealed class SingletoneDBMS
     {
@@ -35,6 +35,7 @@ namespace db_big_scuola
 
         public void createDb()
         {
+            //Query per la creazione del DB
             string sqlCreateDb = "IF  NOT EXISTS (SELECT * FROM sys.databases WHERE name = N'db_big_scuola')" +
                                         "BEGIN " +
                                             "CREATE DATABASE[db_big_scuola] " +
@@ -44,18 +45,20 @@ namespace db_big_scuola
                                             "DROP DATABASE [db_big_scuola] " +
                                             "CREATE DATABASE [db_big_scuola] " +
                                         "END;\n";
+
+            //Query per l'utilizzo del DB e per la creazione delle tabelle
             string sqlCreateTables = "USE db_big_scuola; \n" +
                                     "CREATE TABLE games( " +
-                                        "id                     INT             NOT NULL    IDENTITY, " +
+                                        "id                     INT             IDENTITY(0,1)   NOT NULL, " +
                                         "name                   VARCHAR(100)    NOT NULL, " +
                                         "single_league          INT             NULL, " +
-                                        "game_in_the_ranking    INT             NOT NULL, " +
+                                        "game_in_the_ranking    INT             NULL, " +
                                         "PRIMARY KEY (id), " +
                                         "UNIQUE (name)" +
                                     " );\n" +
 
                                     "CREATE TABLE tournaments( " +
-                                        "id             INT             NOT NULL    IDENTITY, " +
+                                        "id             INT             IDENTITY(0,1)   NOT NULL, " +
                                         "id_game        INT             NOT NULL, " +
                                         "data_hour      DATETIME        NOT NULL, " +
                                         "name           VARCHAR(100)    NOT NULL, " +
@@ -70,7 +73,7 @@ namespace db_big_scuola
                                     " );\n" +
 
                                     "CREATE TABLE tables( " +
-                                        "id             INT             NOT NULL    IDENTITY, " +
+                                        "id             INT             IDENTITY(0,1)   NOT NULL, " +
                                         "id_tournament  INT             NOT NULL, " +
                                         "progressive_n  INT             NULL, " +
                                         "players_n      INT             NOT NULL, " +
@@ -80,7 +83,7 @@ namespace db_big_scuola
                                     " );\n" +
 
                                     "CREATE TABLE players( " +
-                                        "id             INT             NOT NULL    IDENTITY, " +
+                                        "id             INT             IDENTITY(0,1)   NOT NULL, " +
                                         "nickname       VARCHAR(100)    NOT NULL, " +
                                         "firstname      VARCHAR(200)    NOT NULL, " +
                                         "lastname       VARCHAR(200)    NOT NULL, " +
@@ -89,7 +92,8 @@ namespace db_big_scuola
                                         "birthdate      DATE            NOT NULL, " +
                                         "elo            FLOAT           NULL, " + //se si iscrive un nuovo giocatore non ha l'elo 
                                         "PRIMARY KEY(id), " +
-                                        "UNIQUE (nickname)" +
+                                        "UNIQUE (nickname), " +
+                                        "UNIQUE (email)" +
                                     " );\n" +
 
                                     "CREATE TABLE participations( " +
@@ -104,11 +108,37 @@ namespace db_big_scuola
                                     "CREATE TABLE compositions( " +
                                         "id_table       INT             NOT NULL, " +
                                         "id_player      INT             NOT NULL, " +
-                                        "punteggio      FLOAT           NULL" +
+                                        "punteggio      FLOAT           NULL," +
                                         "PRIMARY KEY (id_table, id_player), " +
                                         "CONSTRAINT[FK_compositions_players] FOREIGN KEY([id_player]) REFERENCES[dbo].[players]([id]), " +
                                         "CONSTRAINT[FK_compositions_tables] FOREIGN KEY([id_table]) REFERENCES[dbo].[tables]([id])" +
                                    ");";
+
+            //Query per l'inserimenti di 4 giochi
+            String sqlInsertGames = "INSERT INTO games(name) VALUES('Trivial Puresuit');" +
+                                    "INSERT INTO games(name) VALUES('Cluedo');" +
+                                    "INSERT INTO games(name) VALUES('Scarabeo');" +
+                                    "INSERT INTO games(name) VALUES('Risiko');";
+
+            //Query per l'inserimenti di 9 giocatori
+            String sqlInsertPlayers = "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('fattrice', 'Sara', 'Rossi', 'fat@jolly.it', '+39 111 213546', '2000-02-04');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('destroyer25', 'Fede','Mai', 'tigro@jolly.it', '+39 222 213546', '2001-04-23');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('BassiMaestro', 'Leo', 'Joseph', 'ciao@jolly.it', '+39 131 213546', '1991-06-25');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('nerdBoy', 'Nerd', 'Boi', 'nerd@jolly.it', '+39 211 213546', '1962-12-31');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('boh', 'Paul','Grim', 'a@jolly.it', '+39 322 213546', '1981-04-23');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('kimJong', 'Lin Kun', 'Fu', 'lao@jolly.it', '+39 139 213546', '1964-06-25');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('hello', 'Ciao', 'Bye', 'bye@jolly.it', '+39 211 213546', '1962-12-31');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('chiuso', 'Lock', 'Down', 'key@jolly.it', '+39 149 213546', '1977-06-25');" +
+                                      "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
+                                        "VALUES('hulk', 'Uomo', 'Verde', 'green@jolly.it', '+39 211 213546', '1962-12-31');";
             SqlCommand command;
 
             myConnection.Open();
@@ -116,32 +146,81 @@ namespace db_big_scuola
             command.ExecuteNonQuery();
             command = new SqlCommand(sqlCreateTables, myConnection);
             command.ExecuteNonQuery();
+            command = new SqlCommand(sqlInsertGames, myConnection);
+            command.ExecuteNonQuery();
+            command = new SqlCommand(sqlInsertPlayers, myConnection);
+            command.ExecuteNonQuery();
             myConnection.Close();
         }
 
-        public bool CreateNewTournament(bigTournamentManager.Tournament t)
+        public bool CreateNewTournament(Tournament t)
         {
-            bool success = false;
-            String sqlQuery = "INSERT INTO tournaments(id_game, data_hour, name, players_n, address) " +
-                              "VALUES (" + GetGame(t.Game) + ", \"" + GetDataHourString(t.Date) + "\", \"" + t.Name + "\"," + t.getListPlayers().Count + " \"" + t.Address + " )";
+            int idT;
+            SqlCommand command;
+            bool success = true;
 
+            //Query per la creazione del torneo all'interno del DB
+            String sqlCreateT = "INSERT INTO tournaments(id_game, data_hour, name, players_n, address) " +
+                                    "VALUES( " + 
+                                            GetGame(t.Game) + "," +
+                                            " '" + t.Date.ToString("YYYY'-'MM'-'dd' 'HH':'mm") + "'," + 
+                                            " '" + t.Name + "'," + 
+                                            t.getListPlayers().Count + "," + 
+                                            " '" + t.Address + "' );";            
+            //Query per ottenere l'id del torneo
+            String sqlGetIdT = "SELECT id FROM tournaments " +
+                                "WHERE name = '" + t.Name +"'";
 
+            try
+            {
+                //Esequzione delle query
+                myConnection.Open();
+                command = new SqlCommand(sqlCreateT, myConnection);
+                command.ExecuteNonQuery();
+                command = new SqlCommand(sqlGetIdT, myConnection);
+                idT = command.ExecuteNonQuery();
 
+                //Inserimento dati nella tabella participations
+                for (int i = 0; i < t.getListPlayers().Count; i++)
+                {
+                    String nickname = t.getListPlayers().ElementAt(i).Nickname;
+                    String sqlParticipation = "INSERT INTO participations" +
+                                                "VALUES('" + idT + "', '" + GetPlayerID(nickname) + "');";
+                    command = new SqlCommand(sqlParticipation, myConnection);
+                }
+                myConnection.Close();
+            } catch (Exception e)
+            {
+                success = false;
+            }
             return success;
         }
 
-        private String GetDataHourString(DateTime date)
+        private int GetGame(String name)
         {
-            String str = " ";
-            return str;
+            int id;
+            //Query per ottenere l'id del gioco
+            String sqlQuery = "SELECT id FROM games " +
+                              "WHERE name = '" + name + "'";
+            SqlCommand command;
+
+            myConnection.Open();
+            command = new SqlCommand(sqlQuery, myConnection);
+            id = command.ExecuteNonQuery();
+            myConnection.Close();
+
+            return id;
         }
 
-        private int GetGame(String nameGame)
+        private int GetPlayerID(String name)
         {
-            int id = 0;
-
-
-
+            int id;
+            String sqlGetIdP = "SELECT id FROM players" +
+                                "WHERE nickname = '" + name + "'";
+            myConnection.Open();
+            SqlCommand command = new SqlCommand(sqlGetIdP, myConnection);
+            id = command.ExecuteNonQuery();
+            myConnection.Close();
             return id;
         }
 

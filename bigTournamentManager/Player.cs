@@ -21,6 +21,8 @@ namespace bigTournamentManager
             this.nickname = nickname;
         }
 
+        public string Nickname { get => nickname; set => nickname = value; }
+
         public void setPoints(int p)
         {
             this.points = p;
