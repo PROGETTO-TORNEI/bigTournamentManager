@@ -42,6 +42,7 @@ namespace bigTournamentManager
         {
             Player player = (Player)lbx1.SelectedItem;
             player.setPoints(Int32.Parse(txb1.Text));
+            txb1.Clear();
             lbx1.Items.Refresh();
         }
 
@@ -49,5 +50,6 @@ namespace bigTournamentManager
         {
             //salva punteggio su db
         }
+
     }
 }

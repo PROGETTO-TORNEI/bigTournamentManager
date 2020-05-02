@@ -36,7 +36,7 @@ namespace bigTournamentManager
             }
             else
             {
-                this.sortList();
+                this.sortByScore();
             }
 
             IEnumerator<Player> en = this.listPlayers.GetEnumerator();
@@ -81,25 +81,27 @@ namespace bigTournamentManager
             return true;
         }
 
-        protected bool sortList()
+        protected bool sortByScore()
         {
+            
             LinkedList<Player> newListPlayers = new LinkedList<Player>();
+            int nPlayers = this.listPlayers.Count;
 
-            IEnumerator<Player> en = this.listPlayers.GetEnumerator();            
-
-            for (int l = 0; l < this.tablePlayersNumber; l++) {
+            for(int i = 0; i < nPlayers; i++){
                 int maxpts = 0;
-                for (int i = 0; i < this.tablePlayersNumber; i++)
-                {                    
-                    if (en.MoveNext()) {
-                        Player p = en.Current;
-                        if (p.getPoints() >= maxpts) {                            
-                            newListPlayers.AddLast(p);
-                            maxpts = p.getPoints();
-                        }
+                Player maxPtsPlayer = null;
+                Player [] aPlayers = this.listPlayers.ToArray();
+                for (int l = 0; l < aPlayers.Length; l++) {
+                    int pPoint = aPlayers[l].getPoints();
+                    if (pPoint >= maxpts) { 
+                        maxPtsPlayer = aPlayers[l];
+                        maxpts = pPoint;
                     }
                 }
+                newListPlayers.AddLast(maxPtsPlayer);
+                this.listPlayers.Remove(maxPtsPlayer);
             }
+
             this.listPlayers = newListPlayers;
 
             return true;
@@ -107,7 +109,7 @@ namespace bigTournamentManager
 
         public override string ToString()
         {
-            return "Turno " + this.roundNumber + ": " +  this.tablePlayersNumber + " giocatori";
+            return "Turno " + this.roundNumber;
         }
     }
 }

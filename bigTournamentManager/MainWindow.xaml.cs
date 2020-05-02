@@ -51,6 +51,7 @@ namespace bigTournamentManager
         private void btnAddPlayer_Click(object sender, RoutedEventArgs e)
         {
             String player = txbPlayer.Text;
+            txbPlayer.Clear();
             this.listPlayers.AddLast(new Player(player));
             ltb1.Items.Add(player);
         }
