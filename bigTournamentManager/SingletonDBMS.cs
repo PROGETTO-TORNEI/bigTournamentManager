@@ -12,16 +12,16 @@ namespace bigTournamentManager
         //Istanza della classe
         private static SingletoneDBMS istance = null;
 
+        //Sintassi per la connessione al server SQl
+        //per Windows Authentication
+        //@Server =(Instance Server Name); Integrated Security=True;
+        //per SQL server Authentication
+        //@Server =(Instance Server Name); Integrated Security=True; User ID=(user name); Password=(password);
+        //myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
         private static SqlConnection myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
 
         private SingletoneDBMS()
         {
-            //Sintassi per la connessione al server SQl
-            //per Windows Authentication
-            //@Server =(Instance Server Name); Integrated Security=True;
-            //per SQL server Authentication
-            //@Server =(Instance Server Name); Integrated Security=True; User ID=(user name); Password=(password);
-            //myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
         }
 
         public static SingletoneDBMS GetInstance()
@@ -33,6 +33,9 @@ namespace bigTournamentManager
             return istance;
         }
 
+        /// <summary>
+        /// Creazione del DB
+        /// </summary>
         public void createDb()
         {
             //Query per la creazione del DB
@@ -153,42 +156,32 @@ namespace bigTournamentManager
             myConnection.Close();
         }
 
-        public bool CreateNewTournament(Tournament t)
+        /// <summary>
+        /// Inserimento del torneo nel DB
+        /// </summary>
+        /// <param name="t"> istanza di torneo </param>
+        /// <returns> restisuice un boolean che specifica se l'esequzione della funziona è avvenuta con sucesso</returns>
+        public bool InsertTournament(Tournament t)
         {
-            int idT;
             SqlCommand command;
             bool success = true;
 
 
-            //Query per la creazione del torneo all'interno del DB
+            //Query per l'inserimento del torneo all'interno del DB
             String sqlCreateT = "INSERT INTO tournaments(id_game, data_hour, name, players_n, address) " +
                                     "VALUES( " + 
-                                            GetGame(t.Game) + "," +
+                                            GetGameID(t.Game) + "," +
                                             " '" + t.Date.ToString("YYYY'-'MM'-'dd' 'HH':'mm") + "'," + 
                                             " '" + t.Name + "'," + 
                                             t.getListPlayers().Count + "," + 
                                             " '" + t.Address + "' );";            
-            //Query per ottenere l'id del torneo
-            String sqlGetIdT = "SELECT id FROM tournaments " +
-                                "WHERE name = '" + t.Name +"'";
-
             try
             {
                 //Esequzione delle query
                 myConnection.Open();
                 command = new SqlCommand(sqlCreateT, myConnection);
                 command.ExecuteNonQuery();
-                command = new SqlCommand(sqlGetIdT, myConnection);
-                idT = command.ExecuteNonQuery();
-
-                //Inserimento dati nella tabella participations
-                for (int i = 0; i < t.getListPlayers().Count; i++)
-                {
-                    String nickname = t.getListPlayers().ElementAt(i).Nickname;
-                    String sqlParticipation = "INSERT INTO participations" +
-                                                "VALUES('" + idT + "', '" + GetPlayerID(nickname) + "');";
-                    command = new SqlCommand(sqlParticipation, myConnection);
-                }
+                InsertParticipations(t, myConnection);
                 myConnection.Close();
             } catch (Exception e)
             {
@@ -197,7 +190,12 @@ namespace bigTournamentManager
             return success;
         }
 
-        private int GetGame(String name)
+        /// <summary>
+        /// Restituisce l'id del gioco dato il nome
+        /// </summary>
+        /// <param name="name"> nome del gioco </param>
+        /// <returns> restituisce l'id del gioco </returns>
+        private int GetGameID(String name)
         {
             int id;
             //Query per ottenere l'id del gioco
@@ -213,11 +211,12 @@ namespace bigTournamentManager
             return id;
         }
 
-        private int GetPlayerID(String name)
+        //Restituisce l'id del giocatore dato il nickname
+        private int GetPlayerID(String nickname)
         {
             int id;
             String sqlGetIdP = "SELECT id FROM players" +
-                                "WHERE nickname = '" + name + "'";
+                                "WHERE nickname = '" + nickname + "'";
             myConnection.Open();
             SqlCommand command = new SqlCommand(sqlGetIdP, myConnection);
             id = command.ExecuteNonQuery();
@@ -225,5 +224,112 @@ namespace bigTournamentManager
             return id;
         }
 
+        /// <summary>
+        /// Restituisce l'id del torneo
+        /// </summary>
+        /// <param name="tournamentName"> nome del torneo </param>
+        /// <returns></returns>
+        private int GetTournamentID(String tournamentName)
+        {
+            int id;
+            SqlCommand command;
+            String sqlGetIdT = "SELECT id FROM tournaments " +
+                                "WHERE name = '" + tournamentName + "'";
+            myConnection.Open();
+            command = new SqlCommand(sqlGetIdT, myConnection);
+            id = command.ExecuteNonQuery();
+            myConnection.Close();
+
+            return id;
+
+        }
+
+        /// <summary>
+        /// Restituisce l'id del tavolo
+        /// </summary>
+        /// <param name="rn"> numero del turno </param>
+        /// <returns> restisuice il tavolo di un determinato turno </returns>
+        private int GetTableID(int rn)
+        {
+            int id;
+            SqlCommand command;
+            String sqlGetIdT = "SELECT id FROM tournaments " +
+                                "WHERE turn = " + rn + ""
+;
+            myConnection.Open();
+            command = new SqlCommand(sqlGetIdT, myConnection);
+            id = command.ExecuteNonQuery();
+            myConnection.Close();
+
+            return id;
+        }
+        
+        /// <summary>
+        /// Inserisce le associazioni tra gioctore e torneo
+        /// </summary>
+        /// <param name="t"> istanza di torno </param>
+        /// <param name="c"> istanza della connessione al DB </param>
+        private void InsertParticipations(Tournament t, SqlConnection c)
+        {
+            int idT = GetTournamentID(t.Name);
+            SqlCommand command;
+
+            //Inserimento dati nella tabella participations
+            for (int i = 0; i < t.getListPlayers().Count; i++)
+            {
+                String nickname = t.getListPlayers().ElementAt(i).Nickname;
+                String sqlParticipation = "INSERT INTO participations" +
+                                            "VALUES(" + idT + ", " + GetPlayerID(nickname) + ");";
+                command = new SqlCommand(sqlParticipation, c);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Inserisce i dati iniziali del turno
+        /// </summary>
+        /// <param name="t"> istanza di torneo </param>
+        /// <param name="rn"> numero del turno (roundNumber) </param>
+        /// <returns></returns>
+        public bool InsertTurnStart(Tournament t, int rn)
+        {
+            bool success = true;
+            SqlCommand command;
+            int idTable;
+            int idT = GetTournamentID(t.Name);
+            int players_n = t.CurrentTurn.TablePlayersNumber;
+            String sqlInsertTable = "";
+            String sqlInsertComposition = "";
+            myConnection.Open();
+            try
+            {
+                for (int i = 0; i < t.CurrentTurn.getListTables().Count; i++)
+                {
+                    sqlInsertTable = "INSERT INTO tables(id_tournament, players_n, turn, progressive_n)" +
+                                            "VALUES(" + idT + ", " +
+                                                       players_n + ", " +
+                                                       rn + ", " +
+                                                       t.CurrentTurn.getListTables().ElementAt(i).TableNumber + ");";
+                    idTable = GetTableID(rn);
+                    for (int k = 0; k < t.CurrentTurn.getListTables().ElementAt(i).getPlayers().Count; k++)
+                    {
+                        String playerNickname = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).Nickname;
+                        sqlInsertComposition = "INSERT INTO compositions(id_table, id_player)" +
+                                                    "VALUES(" + idTable +
+                                                            "'" + playerNickname + ");";
+                    }
+                    command = new SqlCommand(sqlInsertTable, myConnection);
+                    command.ExecuteNonQuery();
+                    command = new SqlCommand(sqlInsertComposition, myConnection);
+                    command.ExecuteNonQuery();
+                }
+            } catch(Exception e)
+            {
+                success = false;
+            }
+            myConnection.Close();
+
+            return success;
+        }
     }
 }

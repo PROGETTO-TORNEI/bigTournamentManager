@@ -15,6 +15,9 @@ namespace bigTournamentManager
         private int roundNumber;
         private int qualifiedPlayersNumber;
 
+        public int TablePlayersNumber { get => tablePlayersNumber; set => tablePlayersNumber = value; }
+        public LinkedList<Player> ListPlayers { get => listPlayers; set => listPlayers = value; }
+
         public Turn(bool italianRound, int tablePlayersNumber, LinkedList<Player> listPlayers, int roundNumber)
         {
             this.italianRound = italianRound;

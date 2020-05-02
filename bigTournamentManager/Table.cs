@@ -17,6 +17,8 @@ namespace bigTournamentManager
             this.tableNumber = tableNumber;
         }
 
+        public int TableNumber { get => tableNumber; set => tableNumber = value; }
+
         public void addPlayer(Player player)
         {
             this.players.AddLast(player);

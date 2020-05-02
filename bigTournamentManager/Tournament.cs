@@ -33,8 +33,7 @@ namespace bigTournamentManager
         public string Address { get => address; set => address = value; }
         public string Game { get => game; set => game = value; }
         public DateTime Date { get => date; set => date = value; }
-
-
+        public Turn CurrentTurn { get => currentTurn; set => currentTurn = value; }
 
         public LinkedList<Player> getListPlayers()
         {
