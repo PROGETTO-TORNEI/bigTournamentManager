@@ -28,6 +28,11 @@ namespace bigTournamentManager
             this.points = p;
         }
 
+        public int getPoints()
+        {
+            return this.points;
+        }
+
         public override string ToString()
         {
             return this.nickname + ": " + this.points + " points";
