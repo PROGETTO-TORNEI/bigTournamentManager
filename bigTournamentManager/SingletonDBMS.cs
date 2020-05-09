@@ -19,7 +19,7 @@ namespace bigTournamentManager
         //per SQL server Authentication
         //@Server =(Instance Server Name); Integrated Security=True; User ID=(user name); Password=(password);
         //myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
-        private static SqlConnection myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
+        private static SqlConnection myConnection = new SqlConnection("Server=DESKTOP-JJMRU4D\\SQLEXPRESS;" + "Integrated Security=True");
 
         private SingletoneDBMS()
         {

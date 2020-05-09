@@ -17,6 +17,15 @@ namespace bigTournamentManager
         private Turn currentTurn;
         private int roundNumber;
 
+        public string Name { get => name; set => name = value; }
+        public string Address { get => address; set => address = value; }
+        public string Game { get => game; set => game = value; }
+        public DateTime Date { get => date; set => date = value; }
+        public bool Teams { get => teams; set => teams = value; }
+        public LinkedList<Player> ListPlayers { get => listPlayers; set => listPlayers = value; }
+        public Turn CurrentTurn { get => currentTurn; set => currentTurn = value; }
+        public int RoundNumber { get => roundNumber; set => roundNumber = value; }
+
         public Tournament(string name, string game, string address, DateTime date, bool teams, LinkedList<Player> listPlayers)
         {
             this.name = name;

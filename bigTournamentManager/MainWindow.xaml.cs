@@ -28,11 +28,11 @@ namespace bigTournamentManager
         public MainWindow()
         {
             InitializeComponent();
+            SingletoneDBMS.GetInstance().createDb();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            //predo dati da form
             this.name = txbName.Text;
             this.address = txbAddress.Text;
             this.game = txbGame.Text;
@@ -42,7 +42,8 @@ namespace bigTournamentManager
 
             this.tournament = new Tournament(this.name, this.address, this.game, this.date, this.teams, this.listPlayers);
 
-            //salvataggio torneo su db
+            bool b = SingletoneDBMS.GetInstance().InsertTournament(this.tournament);
+            MessageBox.Show(b.ToString());
 
             TurnsWindow win = new TurnsWindow(this.tournament);
             win.Show();

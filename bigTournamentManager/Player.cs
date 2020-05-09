@@ -21,6 +21,12 @@ namespace bigTournamentManager
             this.nickname = nickname;
         }
 
+        public string Name { get => name; set => name = value; }
+        public string LastName { get => lastName; set => lastName = value; }
+        public string Nickname { get => nickname; set => nickname = value; }
+        public string Mail { get => mail; set => mail = value; }
+        public int Points { get => points; set => points = value; }
+
         public int getPoints()
         {
             return this.points;
