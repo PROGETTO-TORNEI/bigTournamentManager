@@ -48,7 +48,7 @@ namespace bigTournamentManager
 
         private void btnSavePoints_Click(object sender, RoutedEventArgs e)
         {
-            //salva punteggio su db
+            SingletonDBMS.GetInstance().InsertScores(this.tournament);
         }
 
     }

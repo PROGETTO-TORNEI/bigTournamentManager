@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    public sealed class SingletoneDBMS
+    public sealed class SingletonDBMS
     {
         //Istanza della classe
-        private static SingletoneDBMS istance = null;
+        private static SingletonDBMS istance = null;
 
         //Sintassi per la connessione al server SQl
         //per Windows Authentication
@@ -21,15 +21,15 @@ namespace bigTournamentManager
         //myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
         private static SqlConnection myConnection = new SqlConnection("Server=DESKTOP-JJMRU4D\\SQLEXPRESS;" + "Integrated Security=True");
 
-        private SingletoneDBMS()
+        private SingletonDBMS()
         {
         }
 
-        public static SingletoneDBMS GetInstance()
+        public static SingletonDBMS GetInstance()
         {
             if (istance == null)
             {
-                istance = new SingletoneDBMS();
+                istance = new SingletonDBMS();
             }
             return istance;
         }
@@ -37,18 +37,12 @@ namespace bigTournamentManager
         /// <summary>
         /// Creazione del DB
         /// </summary>
-        public void createDb()
+        public void CreateDb()
         {
             //Query per la creazione del DB
-            string sqlCreateDb = "IF  NOT EXISTS (SELECT * FROM sys.databases WHERE name = N'db_big_scuola')" +
-                                        "BEGIN " +
-                                            "CREATE DATABASE[db_big_scuola] " +
-                                        "END " +
-                                    "ELSE " +
-                                        "BEGIN " +
-                                            "DROP DATABASE [db_big_scuola] " +
-                                            "CREATE DATABASE [db_big_scuola] " +
-                                        "END;\n";
+            string sqlCreateDb = "  USE MASTER " +
+                                 "  DROP DATABASE IF EXISTS db_big_scuola; " +
+                                 "  CREATE DATABASE db_big_scuola; ";
 
             //Query per l'utilizzo del DB e per la creazione delle tabelle
             string sqlCreateTables = "USE db_big_scuola; \n" +
@@ -126,35 +120,36 @@ namespace bigTournamentManager
 
             //Query per l'inserimenti di 9 giocatori
             String sqlInsertPlayers = "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('fattrice', 'Sara', 'Rossi', 'fat@jolly.it', '+39 111 213546', '2000-02-04');" +
+                                        "VALUES('g1', 'Sara', 'Rossi', 'fat@jolly.it', '+39 111 213546', '2000-02-04');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('destroyer25', 'Fede','Mai', 'tigro@jolly.it', '+39 222 213546', '2001-04-23');" +
+                                        "VALUES('g2', 'Fede','Mai', 'tigro@jolly.it', '+39 222 213546', '2001-04-23');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('BassiMaestro', 'Leo', 'Joseph', 'ciao@jolly.it', '+39 131 213546', '1991-06-25');" +
+                                        "VALUES('g3', 'Leo', 'Joseph', 'ciao@jolly.it', '+39 131 213546', '1991-06-25');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('nerdBoy', 'Nerd', 'Boi', 'nerd@jolly.it', '+39 211 213546', '1962-12-31');" +
+                                        "VALUES('g4', 'Nerd', 'Boi', 'nerd@jolly.it', '+39 211 213546', '1962-12-31');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('boh', 'Paul','Grim', 'a@jolly.it', '+39 322 213546', '1981-04-23');" +
+                                        "VALUES('g5', 'Paul','Grim', 'a@jolly.it', '+39 322 213546', '1981-04-23');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('kimJong', 'Lin Kun', 'Fu', 'lao@jolly.it', '+39 139 213546', '1964-06-25');" +
+                                        "VALUES('g6', 'Lin Kun', 'Fu', 'lao@jolly.it', '+39 139 213546', '1964-06-25');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('hello', 'Ciao', 'Bye', 'bye@jolly.it', '+39 211 213546', '1962-12-31');" +
+                                        "VALUES('g7', 'Ciao', 'Bye', 'bye@jolly.it', '+39 211 213546', '1962-12-31');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('chiuso', 'Lock', 'Down', 'key@jolly.it', '+39 149 213546', '1977-06-25');" +
+                                        "VALUES('g8', 'Lock', 'Down', 'key@jolly.it', '+39 149 213546', '1977-06-25');" +
                                       "INSERT INTO players(nickname, firstname, lastname, email, phone, birthdate)" +
-                                        "VALUES('hulk', 'Uomo', 'Verde', 'green@jolly.it', '+39 211 213546', '1962-12-31');";
+                                        "VALUES('g9', 'Uomo', 'Verde', 'green@jolly.it', '+39 211 213546', '1962-12-31');";
             SqlCommand command;
 
-            myConnection.Open();
-            command = new SqlCommand(sqlCreateDb, myConnection);
-            command.ExecuteNonQuery();
-            command = new SqlCommand(sqlCreateTables, myConnection);
-            command.ExecuteNonQuery();
-            command = new SqlCommand(sqlInsertGames, myConnection);
-            command.ExecuteNonQuery();
-            command = new SqlCommand(sqlInsertPlayers, myConnection);
-            command.ExecuteNonQuery();
-            myConnection.Close();
+            try {
+                myConnection.Open();
+                command = new SqlCommand(sqlCreateDb, myConnection);
+                command.ExecuteNonQuery();
+                command = new SqlCommand(sqlCreateTables, myConnection);
+                command.ExecuteNonQuery();
+                command = new SqlCommand(sqlInsertGames, myConnection);
+                command.ExecuteNonQuery();
+                command = new SqlCommand(sqlInsertPlayers, myConnection);
+                command.ExecuteNonQuery();
+            } catch(Exception e) { }
         }
 
         /// <summary>
@@ -166,19 +161,23 @@ namespace bigTournamentManager
         {
             int id = -1;
             //Query per ottenere l'id del gioco
-            String sqlQuery = "SELECT id FROM games " +
-                              "WHERE name = @n;";
+            String sqlQuery = "SELECT id FROM db_big_scuola.dbo.games " +
+                              "WHERE name =@n;";
             SqlCommand command = new SqlCommand(sqlQuery, myConnection);
-
-            myConnection.Open();
             command.Parameters.AddWithValue("@n", name);
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            try
             {
-                id = reader.GetInt32(0);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    id = reader.GetInt32(0);
+                }
+                reader.Close();
+                
             }
-            reader.Close();
-            myConnection.Close();
+            catch (Exception e) { }
 
             return id;
         }
@@ -191,18 +190,16 @@ namespace bigTournamentManager
         private int GetPlayerID(String nickname)
         {
             int id = -1;
-            String sqlGetIdP = "SELECT id FROM players" +
+            String sqlGetIdP = "SELECT id FROM db_big_scuola.dbo.players " +
                                 "WHERE nickname = @n";
             SqlCommand command = new SqlCommand(sqlGetIdP, myConnection);
-            myConnection.Open();
             command.Parameters.AddWithValue("@n", nickname);
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            while (reader.Read())
             {
                 id = reader.GetInt32(0);
             }
             reader.Close();
-            myConnection.Close();
             return id;
         }
 
@@ -210,23 +207,20 @@ namespace bigTournamentManager
         /// Restituisce l'id del torneo
         /// </summary>
         /// <param name="tournamentName"> nome del torneo </param>
-        /// <returns></returns>
+        /// <returns>id torneo</returns>
         private int GetTournamentID(String tournamentName)
         {
             int id = -1;
-            String sqlGetIdT = "SELECT id FROM tournaments " +
+            String sqlGetIdT = "SELECT id FROM db_big_scuola.dbo.tournaments " +
                                 "WHERE name = @t;";
             SqlCommand command = new SqlCommand(sqlGetIdT, myConnection);
-            myConnection.Open();
             command.Parameters.AddWithValue("@t", tournamentName);
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            while (reader.Read())
             {
                 id = reader.GetInt32(0);
             }
             reader.Close();
-            myConnection.Close();
-
             return id;
 
         }
@@ -240,20 +234,18 @@ namespace bigTournamentManager
         private int GetTableID(int rn, int tn)
         {
             int id = -1;
-            String sqlGetIdT = "SELECT id FROM tournaments " +
-                                "WHERE turn = = @rn AND progressive_n = @tn;";
+            String sqlGetIdT = "SELECT id FROM db_big_scuola.dbo.tables " +
+                                "WHERE turn = @rn AND progressive_n = @tn;";
 
             SqlCommand command = new SqlCommand(sqlGetIdT, myConnection);
-            myConnection.Open();
             command.Parameters.AddWithValue("@rn", rn);
             command.Parameters.AddWithValue("@tn", tn);
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            while (reader.Read())
             {
                 id = reader.GetInt32(0);
             }
-            myConnection.Close();
-
+            reader.Close();
             return id;
         }
 
@@ -268,22 +260,19 @@ namespace bigTournamentManager
             bool success = true;
 
             //Query per l'inserimento del torneo all'interno del DB
-            String sqlCreateT = "INSERT INTO tournaments(id_game, date_hour, name, players_n, address) " +
+            String sqlCreateT = "INSERT INTO db_big_scuola.dbo.tournaments(id_game, date_hour, name, players_n, address) " +
                                     "VALUES( @IDgame, @date, @nameT, @players_n, @address);";
             try
             {
-                //Esequzione delle query
-                myConnection.Open();
                 command = new SqlCommand(sqlCreateT, myConnection);
-                command.Parameters.AddWithValue("@IDgame", GetGameID(t.Name));
-                command.Parameters.AddWithValue("@date", t.Date.ToString("YYYY'-'MM'-'dd' 'HH':'mm"));
+                command.Parameters.AddWithValue("@IDgame", GetGameID(t.Game));
+                command.Parameters.AddWithValue("@date", t.Date);
                 command.Parameters.AddWithValue("@nameT", t.Name);
                 command.Parameters.AddWithValue("@players_n", t.getListPlayers().Count);
                 command.Parameters.AddWithValue("@address", t.Address);
-                
+                //Esequzione delle query
                 command.ExecuteNonQuery();
-                myConnection.Close();
-
+                
                 InsertParticipations(t);
 
             } catch (Exception e)
@@ -297,17 +286,16 @@ namespace bigTournamentManager
         /// Inserisce le associazioni tra gioctore e torneo
         /// </summary>
         /// <param name="t"> istanza di torno </param>
-        /// <param name="c"> istanza della connessione al DB </param>
         private void InsertParticipations(Tournament t)
         {
             int idT = GetTournamentID(t.Name);
             String nickname;
             int idP;
             SqlCommand command;
-            String sqlParticipation = "INSERT INTO participations " +
+            String sqlParticipation = "INSERT INTO db_big_scuola.dbo.participations " +
                                         "VALUES( @idT, @idP);";
 
-            myConnection.Open();
+            
             //Inserimento dati nella tabella participations
             for (int i = 0; i < t.getListPlayers().Count; i++)
             {
@@ -318,59 +306,53 @@ namespace bigTournamentManager
                 command.Parameters.AddWithValue("@idP", idP);
                 command.ExecuteNonQuery();
             }
-            myConnection.Close();
         }
 
         /// <summary>
         /// Inserisce i dati iniziali del turno
         /// </summary>
         /// <param name="t"> istanza di torneo </param>
-        /// <param name="rn"> numero del turno (roundNumber) </param>
         /// <returns> restituisce una conferma dell'esecuzione </returns>
-        public bool InsertTurn(Tournament t, int rn)
+        public bool InsertTurn(Tournament t)
         {
             bool success = true;
-
             int idTable;
             int prog_n;
             int idP;
+            String playerNickname;
+
             int idT = GetTournamentID(t.Name);
             int players_n = t.CurrentTurn.TablePlayersNumber;
-            String sqlInsertTable = sqlInsertTable = "INSERT INTO tables(id_tournament, players_n, turn, progressive_n) " +
-                                                        "VALUES( @idT, @players_n, @rn, @prog_n);";
-            String sqlInsertComposition = "INSERT INTO compositions(id_table, id_player) " +
-                                             "VALUES( @idTable, @idP);";
 
-            String playerNickname;
-            SqlCommand command1 = new SqlCommand(sqlInsertTable, myConnection);
-            SqlCommand command2 = new SqlCommand(sqlInsertComposition, myConnection);
             try
             {
-
-                myConnection.Open();
                 for (int i = 0; i < t.CurrentTurn.getListTables().Count; i++)
                 {
+                    String sqlInsertTable = sqlInsertTable = "INSERT INTO db_big_scuola.dbo.tables(id_tournament, players_n, turn, progressive_n) " +
+                                            "VALUES( @idT, @players_n, @rn, @prog_n);";
+                    SqlCommand command1 = new SqlCommand(sqlInsertTable, myConnection);
                     //prog_n rappresenta il numero del tavolo del turno corrente
                     prog_n = t.CurrentTurn.getListTables().ElementAt(i).TableNumber;
                     //set parametri query 1
                     command1.Parameters.AddWithValue("@idT", idT);
                     command1.Parameters.AddWithValue("@players_n", players_n);
-                    command1.Parameters.AddWithValue("@rn", rn);
+                    command1.Parameters.AddWithValue("@rn", t.RoundNumber);
                     command1.Parameters.AddWithValue("@prog_n", prog_n);
                     command1.ExecuteNonQuery();
-
-                    idTable = GetTableID(rn, prog_n);
+                    idTable = GetTableID(t.RoundNumber, prog_n);
                     for (int k = 0; k < players_n; k++)
                     {
                         playerNickname = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).Nickname;
                         idP = GetPlayerID(playerNickname);
+                        String sqlInsertComposition = "INSERT INTO db_big_scuola.dbo.compositions(id_table, id_player) " +
+                                             "VALUES( @idTable, @idP);";
+                        SqlCommand command2 = new SqlCommand(sqlInsertComposition, myConnection);
                         //set parametri query 2
                         command2.Parameters.AddWithValue("@idTable", idTable);
                         command2.Parameters.AddWithValue("@idP", idP);
                         command2.ExecuteNonQuery();
                     }
                 }
-                myConnection.Close();
 
             } catch(Exception e)
             {
@@ -384,35 +366,34 @@ namespace bigTournamentManager
         /// Aggiorna il punteggio del giocatore
         /// </summary>
         /// <param name="t"> istanza di toeno </param>
-        /// <param name="rn"> numero del turno (roundNumber) </param>
         /// <returns> restituisce una conferma dell'esecuzione </returns>
-        public bool InsertPointTurn(Tournament t, int rn)
+        public bool InsertScores(Tournament t)
         {
             bool success = true;
 
             int idTable;
             int idPlayer;
 
-            String sqlUpdateComposition = "UPDATE compositions " +
-                                          "SET points = @points " +
-                                          "WHERE id_table = @idTable AND @id_player = @idPlayer";
-            SqlCommand command = new SqlCommand(sqlUpdateComposition, myConnection);
-
             try
             {
-                myConnection.Open();
                 for (int i = 0; i < t.CurrentTurn.getListTables().Count; i++)
                 {
-                    idTable = GetTableID(rn, t.CurrentTurn.getListTables().ElementAt(i).TableNumber);
+                    idTable = GetTableID(t.RoundNumber, t.CurrentTurn.getListTables().ElementAt(i).TableNumber);
                     for (int k = 0; k < t.CurrentTurn.getListTables().ElementAt(i).getPlayers().Count; k++)
                     {
-                        idPlayer = GetPlayerID(t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).Nickname);
+                        String sqlUpdateComposition = "UPDATE db_big_scuola.dbo.compositions " +
+                                          "SET points = @points " +
+                                          "WHERE id_table = @idTable AND id_player = @idPlayer";
+                        SqlCommand command = new SqlCommand(sqlUpdateComposition, myConnection);
+                        String nickname = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).Nickname;
+                        int points = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).getPoints();
+                        idPlayer = GetPlayerID(nickname);
                         command.Parameters.AddWithValue("@idTable", idTable);
                         command.Parameters.AddWithValue("@idPlayer", idPlayer);
+                        command.Parameters.AddWithValue("@points", points);
                         command.ExecuteNonQuery();
                     }
                 }
-                myConnection.Close();
 
             } catch (Exception e)
             {
@@ -430,9 +411,8 @@ namespace bigTournamentManager
         {
             LinkedList<string> games = new LinkedList<string>();
             String sqlSelectGames = "SELECT name " +
-                                    "FROM games";
+                                    "FROM db_big_scuola.dbo.games";
             SqlCommand command = new SqlCommand(sqlSelectGames, myConnection);
-            myConnection.Open();
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
@@ -441,8 +421,6 @@ namespace bigTournamentManager
                     games.AddLast(reader.GetString(0));
                 }
             }
-            myConnection.Close();
-
             return games;
         }
 
@@ -454,9 +432,8 @@ namespace bigTournamentManager
         {
             LinkedList<string> players= new LinkedList<string>();
             String sqlSelectPlayers = "SELECT nickname " +
-                                      "FROM players";
+                                      "FROM db_big_scuola.dbo.players";
             SqlCommand command = new SqlCommand(sqlSelectPlayers, myConnection);
-            myConnection.Open();
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
@@ -465,8 +442,6 @@ namespace bigTournamentManager
                     players.AddLast(reader.GetString(0));
                 }
             }
-            myConnection.Close();
-
             return players;
         }
     }

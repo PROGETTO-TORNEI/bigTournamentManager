@@ -28,7 +28,7 @@ namespace bigTournamentManager
         public MainWindow()
         {
             InitializeComponent();
-            SingletoneDBMS.GetInstance().createDb();
+            SingletonDBMS.GetInstance().CreateDb();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -40,10 +40,9 @@ namespace bigTournamentManager
 
             this.teams = (bool) chb1.IsChecked;            
 
-            this.tournament = new Tournament(this.name, this.address, this.game, this.date, this.teams, this.listPlayers);
+            this.tournament = new Tournament(this.name, this.game, this.address, this.date, this.teams, this.listPlayers);
 
-            bool b = SingletoneDBMS.GetInstance().InsertTournament(this.tournament);
-            MessageBox.Show(b.ToString());
+            bool b = SingletonDBMS.GetInstance().InsertTournament(this.tournament);
 
             TurnsWindow win = new TurnsWindow(this.tournament);
             win.Show();

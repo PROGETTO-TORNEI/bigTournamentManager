@@ -42,7 +42,7 @@ namespace bigTournamentManager
             ltb1.Items.Add(turn);
             this.tournament.setCurrentTurn(turn);
 
-            //salvo turno su db
+            SingletonDBMS.GetInstance().InsertTurn(this.tournament);
         }
 
         private void btnShowTurn_Click(object sender, RoutedEventArgs e)
