@@ -44,8 +44,9 @@ namespace bigTournamentManager
 
             bool b = SingletonDBMS.GetInstance().InsertTournament(this.tournament);
 
-            TurnsWindow win = new TurnsWindow(this.tournament);
+            TurnsWindow win = new TurnsWindow(this.tournament, this);
             win.Show();
+            this.Hide();
         }
 
         private void btnAddPlayer_Click(object sender, RoutedEventArgs e)

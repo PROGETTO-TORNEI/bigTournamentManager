@@ -51,5 +51,9 @@ namespace bigTournamentManager
             SingletonDBMS.GetInstance().InsertScores(this.tournament);
         }
 
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            //chiudi
+        }
     }
 }

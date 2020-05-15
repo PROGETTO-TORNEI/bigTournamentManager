@@ -20,12 +20,14 @@ namespace bigTournamentManager
     public partial class TurnsWindow : Window
     {
         public Tournament tournament;
+        public MainWindow mainWindow;
 
-        public TurnsWindow(Tournament t)
+        public TurnsWindow(Tournament t, MainWindow mw)
         {
             InitializeComponent();
 
             this.tournament = t;
+            this.mainWindow = mw;
 
             //bool finalphase = false;
         }
@@ -58,6 +60,12 @@ namespace bigTournamentManager
         {
 
             return true;
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            this.mainWindow.Show();
         }
     }
 }

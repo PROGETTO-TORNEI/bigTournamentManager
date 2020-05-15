@@ -16,7 +16,7 @@
         <Button x:Name="btnInsertPoints" Content="Inserisci punteggio" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="250" Grid.ColumnSpan="2" Click="btnInsertPoints_Click"/>
         <ListBox x:Name="lbx1" HorizontalAlignment="Left" Height="135" Margin="181,65,0,0" VerticalAlignment="Top" Width="480" Grid.Column="1"/>
         <Button x:Name="btnSavePoints" Content="Salva punteggi" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Width="250" Grid.ColumnSpan="2" Click="btnSavePoints_Click"/>
-        <Button x:Name="btnBack" Content="Indietro" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="115" Height="35" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnBack" Content="Indietro" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="115" Height="35" Grid.ColumnSpan="2" Click="btnBack_Click"/>
         <ComboBox x:Name="cbx1" Grid.Column="1" HorizontalAlignment="Left" Margin="181,24,0,0" VerticalAlignment="Top" Width="480" SelectionChanged="cbx1_SelectionChanged"/>
 
     </Grid>
