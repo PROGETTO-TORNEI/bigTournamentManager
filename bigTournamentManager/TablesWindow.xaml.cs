@@ -21,13 +21,15 @@ namespace bigTournamentManager
     {
         public Tournament tournament;
         public Turn turn;
+        public TurnsWindow turnsWindow;
 
-        public TablesWindow(Tournament t, Turn si)
+        public TablesWindow(Tournament t, Turn si, TurnsWindow turnsWindow)
         {
             InitializeComponent();
 
             this.tournament = t;
-            this.turn = si;           
+            this.turn = si;
+            this.turnsWindow = turnsWindow;
 
             cbx1.ItemsSource = this.turn.getListTables();
         }
@@ -41,9 +43,12 @@ namespace bigTournamentManager
         private void btnInsertPoints_Click(object sender, RoutedEventArgs e)
         {
             Player player = (Player)lbx1.SelectedItem;
-            player.setPoints(Int32.Parse(txb1.Text));
-            txb1.Clear();
-            lbx1.Items.Refresh();
+            //player.setPoints(Int32.Parse(txb1.Text));
+            //txb1.Clear();
+            PointsWindow win = new PointsWindow(this.tournament, player);
+            this.Close();
+            win.Show();
+            lbx1.Items.Refresh();//funziona?
         }
 
         private void btnSavePoints_Click(object sender, RoutedEventArgs e)
@@ -53,7 +58,8 @@ namespace bigTournamentManager
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            //chiudi
+            this.Close();
+            this.turnsWindow.Show();
         }
     }
 }

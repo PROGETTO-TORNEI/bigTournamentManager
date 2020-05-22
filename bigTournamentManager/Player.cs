@@ -27,19 +27,9 @@ namespace bigTournamentManager
         public string Mail { get => mail; set => mail = value; }
         public int Points { get => points; set => points = value; }
 
-        public int getPoints()
-        {
-            return this.points;
-        }
-
-        public void setPoints(int p)
-        {
-            this.points = p;
-        }
-
         public override string ToString()
         {
-            return this.nickname + ": " + this.points + " points";
+            return this.name + " " + this.lastName + " - " + this.points + " pts";
         }
     }
 

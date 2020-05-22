@@ -51,7 +51,8 @@ namespace bigTournamentManager
         {
             if (ltb1.SelectedItem != null)
             {
-                TablesWindow win = new TablesWindow(this.tournament, (Turn)ltb1.SelectedItem);
+                TablesWindow win = new TablesWindow(this.tournament, (Turn)ltb1.SelectedItem, this);                
+                this.Close();
                 win.Show();
             }
         }
