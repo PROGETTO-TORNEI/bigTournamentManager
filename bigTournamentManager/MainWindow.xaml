@@ -6,21 +6,19 @@
         xmlns:local="clr-namespace:bigTournamentManager"
         mc:Ignorable="d"
         Title="Crea Torneo" Height="380" Width="800">
-    <Grid>
-        <Button x:Name="btnOk" Content="Crea Torneo" HorizontalAlignment="Left" Margin="667,304,0,0" VerticalAlignment="Top" Width="115" Click="btnOk_Click" Height="35"/>
+    <Grid x:Name="MainGrid">
         <Label x:Name="lbl1" Content="Nome" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbName" HorizontalAlignment="Left" Height="25" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" KeyDown="OnKeyDownHandlerTxbName"/>
         <Label x:Name="lbl2" Content="Indirizzo" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbAddress" HorizontalAlignment="Left" Height="25" Margin="10,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" KeyDown="OnKeyDownHandlerTxbAddress"/>
         <Label x:Name="lbl" Content="Gioco" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbGame" HorizontalAlignment="Left" Height="25" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" KeyDown="OnKeyDownHandlerTxbGame"/>
         <Label x:Name="lbl4" Content="Data" HorizontalAlignment="Left" Margin="10,193,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="chb1" Content="Torneo a squadre" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txbName" HorizontalAlignment="Left" Height="25" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
-        <TextBox x:Name="txbAddress" HorizontalAlignment="Left" Height="25" Margin="10,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
-        <TextBox x:Name="txbGame" HorizontalAlignment="Left" Height="25" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250"/>
         <DatePicker x:Name="dpkData" HorizontalAlignment="Left" Margin="10,224,0,0" VerticalAlignment="Top" Width="250"/>
+        <CheckBox x:Name="chb1" Content="Torneo a squadre" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbl5" Content="Giocatori" HorizontalAlignment="Left" Margin="293,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txbPlayer" HorizontalAlignment="Left" Height="25" Margin="302,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360"/>
-        <Button x:Name="btnAddPlayer" Content="Aggiungi giocatore" HorizontalAlignment="Left" Margin="667,41,0,0" VerticalAlignment="Top" Width="115" Click="btnAddPlayer_Click" Height="25"/>
+        <TextBox x:Name="txbPlayer" HorizontalAlignment="Left" Height="25" Margin="302,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360" KeyDown="OnKeyDownHandlerTxbPlayer"/>
         <ListBox x:Name="ltb1" HorizontalAlignment="Left" Height="228" Margin="302,71,0,0" VerticalAlignment="Top" Width="480"/>
-
+        <Button x:Name="btnOk" Content="Crea Torneo" HorizontalAlignment="Left" Margin="667,304,0,0" VerticalAlignment="Top" Width="115" Click="btnOk_Click" Height="35"/>
     </Grid>
 </Window>

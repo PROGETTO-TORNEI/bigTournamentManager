@@ -49,6 +49,43 @@ namespace bigTournamentManager
             this.Hide();
         }
 
+
+        private void OnKeyDownHandlerTxbPlayer(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                String player = txbPlayer.Text;
+                this.listPlayers.AddLast(new Player(player));
+                ltb1.Items.Add(player);
+                txbPlayer.Text = "";
+                txbPlayer.Focus();
+            }
+        }
+
+        private void OnKeyDownHandlerTxbGame(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                dpkData.Focus();
+            }
+        }
+
+        private void OnKeyDownHandlerTxbAddress(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                txbGame.Focus();
+            }
+        }
+
+        private void OnKeyDownHandlerTxbName(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                txbAddress.Focus();
+            }
+        }
+
         private void btnAddPlayer_Click(object sender, RoutedEventArgs e)
         {
             String player = txbPlayer.Text;

@@ -18,7 +18,7 @@ namespace bigTournamentManager
         //@Server =(Instance Server Name); Integrated Security=True;
         //per SQL server Authentication
         //@Server =(Instance Server Name); Integrated Security=True; User ID=(user name); Password=(password);
-        //myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
+        //private static SqlConnection myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
         private static SqlConnection myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
 
         private SingletonDBMS()
@@ -40,9 +40,9 @@ namespace bigTournamentManager
         public void CreateDb()
         {
             //Query per la creazione del DB
-            string sqlCreateDb = "  USE MASTER " +
-                                 "  DROP DATABASE IF EXISTS db_big_scuola; " +
-                                 "  CREATE DATABASE db_big_scuola; ";
+            string sqlCreateDb = "USE MASTER " +
+                                 "DROP DATABASE IF EXISTS db_big_scuola; " +
+                                 "CREATE DATABASE db_big_scuola; ";
 
             //Query per l'utilizzo del DB e per la creazione delle tabelle
             string sqlCreateTables = "USE db_big_scuola; \n" +
@@ -386,7 +386,7 @@ namespace bigTournamentManager
                                           "WHERE id_table = @idTable AND id_player = @idPlayer";
                         SqlCommand command = new SqlCommand(sqlUpdateComposition, myConnection);
                         String nickname = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).Nickname;
-                        int points = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).getPoints();
+                        int points = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).Points;
                         idPlayer = GetPlayerID(nickname);
                         command.Parameters.AddWithValue("@idTable", idTable);
                         command.Parameters.AddWithValue("@idPlayer", idPlayer);

@@ -95,7 +95,7 @@ namespace bigTournamentManager
                 Player maxPtsPlayer = null;
                 Player [] aPlayers = this.listPlayers.ToArray();
                 for (int l = 0; l < aPlayers.Length; l++) {
-                    int pPoint = aPlayers[l].getPoints();
+                    int pPoint = aPlayers[l].Points;
                     if (pPoint >= maxpts) { 
                         maxPtsPlayer = aPlayers[l];
                         maxpts = pPoint;
