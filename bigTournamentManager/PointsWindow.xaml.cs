@@ -21,13 +21,15 @@ namespace bigTournamentManager
     {
         public Tournament tournament;
         public Player player;
+        public ListBox lbx;
 
-        public PointsWindow(Tournament t, Player p)
+        public PointsWindow(Tournament t, Player p, ListBox lbx)
         {
             InitializeComponent();
 
             this.tournament = t;
             this.player = p;
+            this.lbx = lbx;
 
             lbl1.Content = this.player;
             txb1.Text = this.player.Name + " " + this.player.LastName;
@@ -41,6 +43,7 @@ namespace bigTournamentManager
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
             this.player.Points = Int32.Parse(txb1.Text);//funziona?
+            this.lbx.Items.Refresh();
             this.Close();
         }
     }

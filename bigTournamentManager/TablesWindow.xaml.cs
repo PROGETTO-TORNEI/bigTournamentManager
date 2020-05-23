@@ -45,10 +45,8 @@ namespace bigTournamentManager
             Player player = (Player)lbx1.SelectedItem;
             //player.setPoints(Int32.Parse(txb1.Text));
             //txb1.Clear();
-            PointsWindow win = new PointsWindow(this.tournament, player);
-            this.Close();
-            win.Show();
-            lbx1.Items.Refresh();//funziona?
+            PointsWindow win = new PointsWindow(this.tournament, player, lbx1);
+            win.Show();            
         }
 
         private void btnSavePoints_Click(object sender, RoutedEventArgs e)

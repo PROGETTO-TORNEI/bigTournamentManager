@@ -59,7 +59,6 @@ namespace bigTournamentManager
 
         private bool loadLastTurn()
         {
-
             return true;
         }
 

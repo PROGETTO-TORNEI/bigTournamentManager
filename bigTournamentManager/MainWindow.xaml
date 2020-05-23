@@ -17,7 +17,7 @@
         <DatePicker x:Name="dpkData" HorizontalAlignment="Left" Margin="10,224,0,0" VerticalAlignment="Top" Width="250"/>
         <CheckBox x:Name="chb1" Content="Torneo a squadre" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbl5" Content="Giocatori" HorizontalAlignment="Left" Margin="293,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txbPlayer" HorizontalAlignment="Left" Height="25" Margin="302,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="360" KeyDown="OnKeyDownHandlerTxbPlayer"/>
+        <TextBox x:Name="txbPlayer" HorizontalAlignment="Left" Height="25" Margin="302,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" KeyDown="OnKeyDownHandlerTxbPlayer"/>
         <ListBox x:Name="ltb1" HorizontalAlignment="Left" Height="228" Margin="302,71,0,0" VerticalAlignment="Top" Width="480"/>
         <Button x:Name="btnOk" Content="Crea Torneo" HorizontalAlignment="Left" Margin="667,304,0,0" VerticalAlignment="Top" Width="115" Click="btnOk_Click" Height="35"/>
     </Grid>
