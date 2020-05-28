@@ -15,10 +15,9 @@ namespace bigTournamentManager
 
         //Sintassi per la connessione al server SQl
         //per Windows Authentication
-        //@Server =(Instance Server Name); Integrated Security=True;
+        //@Data Source=\(local\); Integrated Security=True;
         //per SQL server Authentication
-        //@Server =(Instance Server Name); Integrated Security=True; User ID=(user name); Password=(password);
-        //private static SqlConnection myConnection = new SqlConnection("Server=DESKTOP-V6TJPP0\\SQLEXPRESS;" + "Integrated Security=True");
+        //@Data Source=\(local\); Integrated Security=True; User ID=(user name); Password=(password);
         private static SqlConnection myConnection = new SqlConnection("Data Source=(local);" + "Integrated Security=True");
 
         private SingletonDBMS()
@@ -425,24 +424,27 @@ namespace bigTournamentManager
         }
 
         /// <summary>
-        /// restituisce la lista dei giocatori
+        /// restituisce il giocatori in base al nickname
         /// </summary>
-        /// <returns> linkedlist </returns>
-        public LinkedList<string> GetPlayersFromDB()
+        /// <param name="nickname">Nickname del giocatrore</param>
+        /// <returns>String</returns>
+        public Player GetPlayerFromDB(String nickname)
         {
-            LinkedList<string> players= new LinkedList<string>();
-            String sqlSelectPlayers = "SELECT nickname " +
-                                      "FROM db_big_scuola.dbo.players";
+            Player player = new Player();
+            int idPlayer = GetPlayerID(nickname);
+            String sqlSelectPlayers = "SELECT * FROM db_big_scuola.dbo.players " +
+                                      "WHERE id = @idP";
             SqlCommand command = new SqlCommand(sqlSelectPlayers, myConnection);
+            command.Parameters.AddWithValue("@idP", idPlayer);
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    players.AddLast(reader.GetString(0));
-                }
+                player.Nickname = reader.GetString(1);
+                player.Name = reader.GetString(2);
+                player.LastName = reader.GetString(3);
+                player.Mail = reader.GetString(4);
             }
-            return players;
+             return player;
         }
     }
 }
