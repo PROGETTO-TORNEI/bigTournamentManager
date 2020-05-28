@@ -432,17 +432,23 @@ namespace bigTournamentManager
         {
             Player player = new Player();
             int idPlayer = GetPlayerID(nickname);
-            String sqlSelectPlayers = "SELECT * FROM db_big_scuola.dbo.players " +
-                                      "WHERE id = @idP";
-            SqlCommand command = new SqlCommand(sqlSelectPlayers, myConnection);
-            command.Parameters.AddWithValue("@idP", idPlayer);
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            if (idPlayer > 1)
             {
-                player.Nickname = reader.GetString(1);
-                player.Name = reader.GetString(2);
-                player.LastName = reader.GetString(3);
-                player.Mail = reader.GetString(4);
+                String sqlSelectPlayers = "SELECT * FROM db_big_scuola.dbo.players " +
+                                          "WHERE id = @idP";
+                SqlCommand command = new SqlCommand(sqlSelectPlayers, myConnection);
+                command.Parameters.AddWithValue("@idP", idPlayer);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    player.Nickname = reader.GetString(1);
+                    player.Name = reader.GetString(2);
+                    player.LastName = reader.GetString(3);
+                    player.Mail = reader.GetString(4);
+                }
+            } else
+            {
+                player = null;
             }
              return player;
         }
