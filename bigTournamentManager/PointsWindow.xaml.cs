@@ -32,7 +32,7 @@ namespace bigTournamentManager
             this.lbx = lbx;
 
             lbl1.Content = this.player;
-            txb1.Text = this.player.Name + " " + this.player.LastName;
+            txb1.Text = this.player.FirstName + " " + this.player.LastName;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

@@ -10,21 +10,25 @@ namespace bigTournamentManager
     {             
         private Boolean italianRound;
         private int tablePlayersNumber;
-        private LinkedList<Player> listPlayers;
+        private List<Player> listPlayers;
         private LinkedList<Table> listTables;
         private int roundNumber;
         private int qualifiedPlayersNumber;
+        private bool isSaved;
 
         public int TablePlayersNumber { get => tablePlayersNumber; set => tablePlayersNumber = value; }
-        public LinkedList<Player> ListPlayers { get => listPlayers; set => listPlayers = value; }
+        public List<Player> ListPlayers { get => listPlayers; set => listPlayers = value; }
+        public int RoundNumber { get => roundNumber; set => roundNumber = value; }
+        public bool IsSaved { get => isSaved; set => isSaved = value; }
 
-        public Turn(bool italianRound, int tablePlayersNumber, LinkedList<Player> listPlayers, int roundNumber)
+        public Turn(bool italianRound, int tablePlayersNumber, List<Player> listPlayers, int roundNumber)
         {
             this.italianRound = italianRound;
             this.tablePlayersNumber = tablePlayersNumber;
             this.listPlayers = listPlayers;
             this.roundNumber = roundNumber;
             this.listTables = new LinkedList<Table>();
+            this.isSaved = false;
         }
 
         public LinkedList<Table> getListTables()
@@ -39,7 +43,7 @@ namespace bigTournamentManager
             }
             else
             {
-                this.sortByScore();
+                this.listPlayers.Sort();
             }
 
             IEnumerator<Player> en = this.listPlayers.GetEnumerator();
@@ -76,7 +80,7 @@ namespace bigTournamentManager
 
         protected bool shuffleList() {
             Random Rand = new Random();
-            LinkedList<Player> nl = new LinkedList<Player>(this.listPlayers.OrderBy((o) =>
+            List<Player> nl = new List<Player>(this.listPlayers.OrderBy((o) =>
             {
                 return (Rand.Next() % this.listPlayers.Count);
             }));
@@ -84,35 +88,9 @@ namespace bigTournamentManager
             return true;
         }
 
-        protected bool sortByScore()
-        {
-            
-            LinkedList<Player> newListPlayers = new LinkedList<Player>();
-            int nPlayers = this.listPlayers.Count;
-
-            for(int i = 0; i < nPlayers; i++){
-                int maxpts = 0;
-                Player maxPtsPlayer = null;
-                Player [] aPlayers = this.listPlayers.ToArray();
-                for (int l = 0; l < aPlayers.Length; l++) {
-                    int pPoint = aPlayers[l].Points;
-                    if (pPoint >= maxpts) { 
-                        maxPtsPlayer = aPlayers[l];
-                        maxpts = pPoint;
-                    }
-                }
-                newListPlayers.AddLast(maxPtsPlayer);
-                this.listPlayers.Remove(maxPtsPlayer);
-            }
-
-            this.listPlayers = newListPlayers;
-
-            return true;
-        }
-
         public override string ToString()
         {
-            return "Turno " + this.roundNumber;
+            return "Turno " + this.roundNumber + (this.isSaved ? "  Salvato":"");
         }
     }
 }

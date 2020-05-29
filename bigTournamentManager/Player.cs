@@ -6,22 +6,25 @@ using System.Threading.Tasks;
 
 namespace bigTournamentManager
 {
-    public class Player
+    public class Player : IEquatable<Player>, IComparable<Player>
     {
         private String name;
         private String lastName;
         private String nickname;
         private String mail;
         private int points;
+        private bool stillInPlay;
 
         public Player(){}
 
         public Player(string nickname)
         {
             this.nickname = nickname;
+            this.stillInPlay = true;
+            this.points = 0;
         }
 
-        public string Name { get => name; set => name = value; }
+        public string FirstName { get => name; set => name = value; }
         public string LastName { get => lastName; set => lastName = value; }
         public string Nickname { get => nickname; set => nickname = value; }
         public string Mail { get => mail; set => mail = value; }
@@ -29,7 +32,23 @@ namespace bigTournamentManager
 
         public override string ToString()
         {
-            return this.name + " " + this.lastName + " - " + this.points + " pts";
+            return this.nickname + " - " + this.points + " pts";
+        }
+
+        int IComparable<Player>.CompareTo(Player other)
+        {
+            // A null value means that this object is greater.
+            if (other == null)
+                return 1;
+
+            else
+                return other.Points.CompareTo(this.Points);
+        }
+
+        bool IEquatable<Player>.Equals(Player other)
+        {
+            if (other == null) return false;
+            return (this.Points.Equals(other.Points));
         }
     }
 

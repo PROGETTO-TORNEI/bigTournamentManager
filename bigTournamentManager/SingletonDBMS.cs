@@ -23,7 +23,7 @@ namespace bigTournamentManager
 
         private SingletonDBMS()
         { 
-            
+         
         }
 
         public static SingletonDBMS GetInstance()
@@ -108,7 +108,7 @@ namespace bigTournamentManager
                                     "CREATE TABLE compositions( " +
                                         "id_table       INT             NOT NULL, " +
                                         "id_player      INT             NOT NULL, " +
-                                        "points         INT           NULL," +
+                                        "points         INT             NOT NULL, " +
                                         "PRIMARY KEY (id_table, id_player), " +
                                         "CONSTRAINT[FK_compositions_players] FOREIGN KEY([id_player]) REFERENCES[dbo].[players]([id]), " +
                                         "CONSTRAINT[FK_compositions_tables] FOREIGN KEY([id_table]) REFERENCES[dbo].[tables]([id])" +
@@ -348,8 +348,8 @@ namespace bigTournamentManager
                     {
                         playerNickname = t.CurrentTurn.getListTables().ElementAt(i).getPlayers().ElementAt(k).Nickname;
                         idP = GetPlayerID(playerNickname);
-                        String sqlInsertComposition = "INSERT INTO db_big_scuola.dbo.compositions(id_table, id_player) " +
-                                             "VALUES( @idTable, @idP);";
+                        String sqlInsertComposition = "INSERT INTO db_big_scuola.dbo.compositions(id_table, id_player, points) " +
+                                             "VALUES( @idTable, @idP, 0);";
                         SqlCommand command2 = new SqlCommand(sqlInsertComposition, myConnection);
                         //set parametri query 2
                         command2.Parameters.AddWithValue("@idTable", idTable);
@@ -425,6 +425,7 @@ namespace bigTournamentManager
                     games.AddLast(reader.GetString(0));
                 }
             }
+            reader.Close();
             return games;
         }
 
@@ -447,15 +448,73 @@ namespace bigTournamentManager
                 while (reader.Read())
                 {
                     player.Nickname = reader.GetString(1);
-                    player.Name = reader.GetString(2);
+                    player.FirstName = reader.GetString(2);
                     player.LastName = reader.GetString(3);
                     player.Mail = reader.GetString(4);
                 }
+                reader.Close();
             } else
             {
                 player = null;
             }
-             return player;
+            return player;
+        }
+
+        public void GetPartialRanking(List<Player> pl) 
+        {
+            IEnumerator<Player> en = pl.GetEnumerator();
+            while (en.MoveNext()) 
+            {
+                Player p = en.Current;
+                p.Points = this.GetSumOfPlayerPoints(p.Nickname);
+            }
+
+        }
+
+        private int GetSumOfPlayerPoints(String nick) 
+        {
+            String q1 = "SELECT id FROM db_big_scuola.dbo.players WHERE nickname = @nick";
+            String sql = "SELECT SUM(points) FROM db_big_scuola.dbo.compositions WHERE id_player=("+q1+")";
+            SqlCommand command = new SqlCommand(sql, myConnection);
+            command.Parameters.AddWithValue("@nick", nick);
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            int sumPoints = 0;
+            if (!reader.IsDBNull(0))
+            {
+                sumPoints = reader.GetInt32(0);
+            }
+            reader.Close();
+            return sumPoints;
+        }
+
+        public void GetTurnRanking(List<Player> pl, int nTurn)  
+        {
+            IEnumerator<Player> en = pl.GetEnumerator();
+            while (en.MoveNext())
+            {
+                Player p = en.Current;
+                p.Points = this.GetTurnPlayerPoints(p.Nickname, nTurn);
+            }
+        }
+
+        private int GetTurnPlayerPoints(String nick, int nTurn) 
+        {
+            String q1 = "SELECT id FROM db_big_scuola.dbo.players WHERE nickname = @nick";
+            String sql = "SELECT C.points FROM db_big_scuola.dbo.compositions C INNER JOIN db_big_scuola.dbo.tables T ON T.id = C.id_table "+
+                "WHERE C.id_player = (" + q1 + ") AND T.turn = @nTurn";
+            SqlCommand command = new SqlCommand(sql, myConnection);
+            command.Parameters.AddWithValue("@nick", nick);
+            command.Parameters.AddWithValue("@nTurn", nTurn);
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            int points = 0;
+            if (!reader.IsDBNull(0))
+            {
+                points = reader.GetInt32(0);
+            }
+            reader.Close();
+            return points;
         }
     }
 }

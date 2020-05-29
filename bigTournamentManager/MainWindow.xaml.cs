@@ -41,7 +41,7 @@ namespace bigTournamentManager
 
             this.teams = (bool) chb1.IsChecked;            
 
-            this.tournament = new Tournament(this.name, this.game, this.address, this.date, this.teams, this.listPlayers);
+            this.tournament = new Tournament(this.name, this.game, this.address, this.date, this.teams, this.listPlayers.ToList<Player>());
 
             bool b = SingletonDBMS.GetInstance().InsertTournament(this.tournament);
 

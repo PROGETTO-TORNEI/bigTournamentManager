@@ -52,12 +52,14 @@ namespace bigTournamentManager
         private void btnSavePoints_Click(object sender, RoutedEventArgs e)
         {
             SingletonDBMS.GetInstance().InsertScores(this.tournament);
+            MessageBox.Show("Punteggi salvati");
+            this.turn.IsSaved = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
             this.turnsWindow.Show();
+            this.Close();
         }
     }
 }

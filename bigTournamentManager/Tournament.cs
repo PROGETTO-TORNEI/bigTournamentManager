@@ -13,8 +13,8 @@ namespace bigTournamentManager
         private String game;
         private DateTime date;
         private Boolean teams;
-        private LinkedList<Player> listPlayers;
-        private Turn currentTurn;
+        private List<Player> listPlayers;
+        private Turn turn;
         private int roundNumber;
 
         public string Name { get => name; set => name = value; }
@@ -22,11 +22,11 @@ namespace bigTournamentManager
         public string Game { get => game; set => game = value; }
         public DateTime Date { get => date; set => date = value; }
         public bool Teams { get => teams; set => teams = value; }
-        public LinkedList<Player> ListPlayers { get => listPlayers; set => listPlayers = value; }
-        public Turn CurrentTurn { get => currentTurn; set => currentTurn = value; }
+        public List<Player> ListPlayers { get => listPlayers; set => listPlayers = value; }
+        public Turn CurrentTurn { get => turn; set => turn = value; }
         public int RoundNumber { get => roundNumber; set => roundNumber = value; }
 
-        public Tournament(string name, string game, string address, DateTime date, bool teams, LinkedList<Player> listPlayers)
+        public Tournament(string name, string game, string address, DateTime date, bool teams, List<Player> listPlayers)
         {
             this.name = name;
             this.game = game;
@@ -34,16 +34,16 @@ namespace bigTournamentManager
             this.date = date;
             this.teams = teams;
             this.listPlayers = listPlayers;
-            this.currentTurn = null;
+            this.turn = null;
             this.roundNumber = 0;
         }        
         
-        public void setCurrentTurn(Turn t)
+        public void setTurn(Turn t)
         {
-            this.currentTurn = t;
+            this.turn = t;
         }
 
-        public LinkedList<Player> getListPlayers()
+        public List<Player> getListPlayers()
         {
             return this.listPlayers;
         }
