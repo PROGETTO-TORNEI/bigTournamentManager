@@ -18,7 +18,6 @@ namespace bigTournamentManager
         //@Data Source=\(local\); Integrated Security=True;
         //per SQL server Authentication
         //@Data Source=\(local\); Integrated Security=True; User ID=(user name); Password=(password);
-        //"Server=DESKTOP-JJMRU4D\\SQLEXPRESS;" + "Integrated Security=True"
 
         private static SqlConnection myConnection = new SqlConnection("Server=" + Environment.MachineName + "\\SQLEXPRESS;" + "Integrated Security=True");
 
