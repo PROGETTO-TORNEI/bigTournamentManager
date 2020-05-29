@@ -18,10 +18,12 @@ namespace bigTournamentManager
         //@Data Source=\(local\); Integrated Security=True;
         //per SQL server Authentication
         //@Data Source=\(local\); Integrated Security=True; User ID=(user name); Password=(password);
-        private static SqlConnection myConnection = new SqlConnection("Data Source=(local);" + "Integrated Security=True");
+        //"Server=DESKTOP-JJMRU4D\\SQLEXPRESS;" + "Integrated Security=True"
+
+        private static SqlConnection myConnection = new SqlConnection("Server=" + Environment.MachineName + "\\SQLEXPRESS;" + "Integrated Security=True");
 
         private SingletonDBMS()
-        {
+        {  
         }
 
         public static SingletonDBMS GetInstance()
@@ -38,10 +40,11 @@ namespace bigTournamentManager
         /// </summary>
         public void CreateDb()
         {
+
             //Query per la creazione del DB
-            string sqlCreateDb = "USE MASTER " +
-                                 "DROP DATABASE IF EXISTS db_big_scuola; " +
-                                 "CREATE DATABASE db_big_scuola; ";
+            string sqlDropDb = "DROP DATABASE IF EXISTS db_big_scuola; ";
+            string sqlCreateDb = "CREATE DATABASE db_big_scuola; ";
+
 
             //Query per l'utilizzo del DB e per la creazione delle tabelle
             string sqlCreateTables = "USE db_big_scuola; \n" +
@@ -140,6 +143,8 @@ namespace bigTournamentManager
 
             try {
                 myConnection.Open();
+                command = new SqlCommand(sqlDropDb, myConnection);
+                command.ExecuteNonQuery();
                 command = new SqlCommand(sqlCreateDb, myConnection);
                 command.ExecuteNonQuery();
                 command = new SqlCommand(sqlCreateTables, myConnection);

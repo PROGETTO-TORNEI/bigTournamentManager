@@ -29,6 +29,7 @@ namespace bigTournamentManager
         {
             InitializeComponent();
             SingletonDBMS.GetInstance().CreateDb();
+            //MessageBox.Show(Environment.MachineName);
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
