@@ -11,11 +11,10 @@
             <ColumnDefinition Width="11*"/>
             <ColumnDefinition Width="61*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnInsertPoints" Content="Inserisci punteggio" HorizontalAlignment="Left" Margin="120,212,0,0" VerticalAlignment="Top" Width="250" Click="btnInsertPoints_Click" Grid.Column="1"/>
-        <ListBox x:Name="lbx1" HorizontalAlignment="Left" Height="162" Margin="10,37,0,0" VerticalAlignment="Top" Width="772" Grid.ColumnSpan="2"/>
+        <ListBox x:Name="lbx1" HorizontalAlignment="Left" Height="162" Margin="10,37,0,0" VerticalAlignment="Top" Width="772" Grid.ColumnSpan="2"  MouseDoubleClick="lbx1_MouseDoubleClick"/>
         <Button x:Name="btnSavePoints" Content="Salva punteggi" HorizontalAlignment="Left" Margin="411,212,0,0" VerticalAlignment="Top" Width="250" Click="btnSavePoints_Click" Grid.Column="1"/>
         <Button x:Name="btnBack" Content="Indietro" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="115" Height="35" Grid.ColumnSpan="2" Click="btnBack_Click"/>
-        <ComboBox x:Name="cbx1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="772" SelectionChanged="cbx1_SelectionChanged" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="cbx1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="772" SelectionChanged="cbx1_SelectionChanged" Grid.ColumnSpan="2" Focusable="True"/>
 
     </Grid>
 </Window>

@@ -42,8 +42,17 @@ namespace bigTournamentManager
         {
 
             //Query per la creazione del DB
-            string sqlDropDb = "DROP DATABASE IF EXISTS db_big_scuola; ";
-            string sqlCreateDb = "CREATE DATABASE db_big_scuola; ";
+            string sqlCreateDb =  "IF EXISTS (SELECT name FROM sys.databases WHERE name = N'db_big_scuola') " +
+                                    "BEGIN " +
+                                    "USE master; " +
+                                    "ALTER DATABASE db_big_scuola SET SINGLE_USER WITH ROLLBACK IMMEDIATE; " +
+                                    "DROP DATABASE IF EXISTS db_big_scuola; " +
+                                    "CREATE DATABASE IF EXISTS db_big_scuola; " +
+                                    "END " +
+                                "ELSE " +
+                                    "BEGIN " +
+                                    "CREATE DATABASE db_big_scuola " +
+                                    "END";
 
 
             //Query per l'utilizzo del DB e per la creazione delle tabelle
@@ -143,8 +152,6 @@ namespace bigTournamentManager
 
             try {
                 myConnection.Open();
-                command = new SqlCommand(sqlDropDb, myConnection);
-                command.ExecuteNonQuery();
                 command = new SqlCommand(sqlCreateDb, myConnection);
                 command.ExecuteNonQuery();
                 command = new SqlCommand(sqlCreateTables, myConnection);
@@ -411,9 +418,9 @@ namespace bigTournamentManager
         /// Restituisce una lista di giochi
         /// </summary>
         /// <returns> linkedlist </returns>
-        public LinkedList<string> GetGamesFromDB()
+        public List<String> GetGamesFromDB()
         {
-            LinkedList<string> games = new LinkedList<string>();
+            List<string> games = new List<string>();
             String sqlSelectGames = "SELECT name " +
                                     "FROM db_big_scuola.dbo.games";
             SqlCommand command = new SqlCommand(sqlSelectGames, myConnection);
@@ -422,7 +429,7 @@ namespace bigTournamentManager
             {
                 while (reader.Read())
                 {
-                    games.AddLast(reader.GetString(0));
+                    games.Add(reader.GetString(0));
                 }
             }
             reader.Close();

@@ -63,6 +63,20 @@ namespace bigTournamentManager
             }
         }
 
+        private void ltb1_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (ltb1.SelectedItem != null)
+            {
+                Turn selectedTurn = (Turn)ltb1.SelectedItem;
+
+                SingletonDBMS.GetInstance().GetTurnRanking(this.tournament.ListPlayers, selectedTurn.RoundNumber);
+
+                TablesWindow win = new TablesWindow(this.tournament, (Turn)ltb1.SelectedItem, this);
+                this.Hide();
+                win.Show();
+            }
+        }
+
         private void resetPointsPlayers() 
         {
             IEnumerator<Player> en = this.tournament.ListPlayers.GetEnumerator();

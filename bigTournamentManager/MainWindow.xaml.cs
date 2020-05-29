@@ -30,13 +30,17 @@ namespace bigTournamentManager
             InitializeComponent();
             SingletonDBMS.GetInstance().CreateDb();
             //MessageBox.Show(Environment.MachineName);
+            
+            List<String> games = SingletonDBMS.GetInstance().GetGamesFromDB();
+            for (int i = 0; i < games.Count; i++)
+                this.cmBoxGame.Items.Add(games.ElementAt(i));
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
             this.name = txbName.Text;
             this.address = txbAddress.Text;
-            this.game = txbGame.Text;
+            this.game = cmBoxGame.Text;
             this.date = dpkData.DisplayDate;
 
             this.teams = (bool) chb1.IsChecked;            
@@ -75,7 +79,7 @@ namespace bigTournamentManager
         {
             if (e.Key == Key.Return)
             {
-                txbGame.Focus();
+                cmBoxGame.Focus();
             }
         }
 

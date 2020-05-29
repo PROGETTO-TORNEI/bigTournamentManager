@@ -12,7 +12,7 @@
         <Label x:Name="lbl2" Content="Indirizzo" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txbAddress" HorizontalAlignment="Left" Height="25" Margin="10,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" KeyDown="OnKeyDownHandlerTxbAddress"/>
         <Label x:Name="lbl" Content="Gioco" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txbGame" HorizontalAlignment="Left" Height="25" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" KeyDown="OnKeyDownHandlerTxbGame"/>
+        <ComboBox x:Name="cmBoxGame" HorizontalAlignment="Left" Height="25" Margin="10,163,0,0" VerticalAlignment="Top" Width="250" KeyDown="OnKeyDownHandlerTxbGame"/>
         <Label x:Name="lbl4" Content="Data" HorizontalAlignment="Left" Margin="10,193,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="dpkData" HorizontalAlignment="Left" Margin="10,224,0,0" VerticalAlignment="Top" Width="250"/>
         <CheckBox x:Name="chb1" Content="Torneo a squadre" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top"/>

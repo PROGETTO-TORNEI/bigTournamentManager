@@ -40,13 +40,13 @@ namespace bigTournamentManager
             lbx1.ItemsSource = selectedTable.getPlayers();
         }
 
-        private void btnInsertPoints_Click(object sender, RoutedEventArgs e)
+        private void lbx1_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             Player player = (Player)lbx1.SelectedItem;
             //player.setPoints(Int32.Parse(txb1.Text));
             //txb1.Clear();
             PointsWindow win = new PointsWindow(this.tournament, player, lbx1);
-            win.Show();            
+            win.Show();
         }
 
         private void btnSavePoints_Click(object sender, RoutedEventArgs e)
