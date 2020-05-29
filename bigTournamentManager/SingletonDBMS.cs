@@ -42,17 +42,14 @@ namespace bigTournamentManager
         {
 
             //Query per la creazione del DB
-            string sqlCreateDb =  "IF EXISTS (SELECT name FROM sys.databases WHERE name = N'db_big_scuola') " +
+            string sqlDropDb = "IF EXISTS (SELECT name FROM sys.databases WHERE name = N'db_big_scuola') " +
                                     "BEGIN " +
                                     "USE master; " +
                                     "ALTER DATABASE db_big_scuola SET SINGLE_USER WITH ROLLBACK IMMEDIATE; " +
                                     "DROP DATABASE IF EXISTS db_big_scuola; " +
-                                    "CREATE DATABASE IF EXISTS db_big_scuola; " +
-                                    "END " +
-                                "ELSE " +
-                                    "BEGIN " +
-                                    "CREATE DATABASE db_big_scuola " +
-                                    "END";
+                                    "END ";
+
+            string sqlCreateDb = "CREATE DATABASE db_big_scuola ";
 
 
             //Query per l'utilizzo del DB e per la creazione delle tabelle
@@ -152,6 +149,8 @@ namespace bigTournamentManager
 
             try {
                 myConnection.Open();
+                command = new SqlCommand(sqlDropDb, myConnection);
+                command.ExecuteNonQuery();
                 command = new SqlCommand(sqlCreateDb, myConnection);
                 command.ExecuteNonQuery();
                 command = new SqlCommand(sqlCreateTables, myConnection);
