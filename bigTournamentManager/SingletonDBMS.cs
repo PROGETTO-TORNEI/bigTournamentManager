@@ -22,7 +22,8 @@ namespace bigTournamentManager
         private static SqlConnection myConnection = new SqlConnection("Server=" + Environment.MachineName + "\\SQLEXPRESS;" + "Integrated Security=True");
 
         private SingletonDBMS()
-        {  
+        { 
+            
         }
 
         public static SingletonDBMS GetInstance()
