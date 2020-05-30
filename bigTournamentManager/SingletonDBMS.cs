@@ -444,7 +444,7 @@ namespace bigTournamentManager
         {
             Player player = new Player();
             int idPlayer = GetPlayerID(nickname);
-            if (idPlayer > 1)
+            if (idPlayer >= 0)
             {
                 String sqlSelectPlayers = "SELECT * FROM db_big_scuola.dbo.players " +
                                           "WHERE id = @idP";
@@ -459,8 +459,7 @@ namespace bigTournamentManager
                     player.Mail = reader.GetString(4);
                 }
                 reader.Close();
-            } else
-            {
+            } else {
                 player = null;
             }
             return player;

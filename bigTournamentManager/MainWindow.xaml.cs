@@ -59,10 +59,14 @@ namespace bigTournamentManager
         {
             if (e.Key == Key.Return)
             {
-                String player = txbPlayer.Text;
-                this.listPlayers.AddLast(new Player(player));
-                ltb1.Items.Add(player);
-                txbPlayer.Text = "";
+                Player player = SingletonDBMS.GetInstance().GetPlayerFromDB(txbPlayer.Text);
+                if (player != null) {
+                    this.listPlayers.AddLast(new Player(player.Nickname));
+                    ltb1.Items.Add(player);
+                    txbPlayer.Text = "";
+                } else {
+                    MessageBox.Show("GIOCATORE INESISTENTE");
+                }
                 txbPlayer.Focus();
             }
         }
