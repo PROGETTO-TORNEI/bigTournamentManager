@@ -94,8 +94,8 @@ namespace bigTournamentManager
                                         "firstname      VARCHAR(200)    NOT NULL, " +
                                         "lastname       VARCHAR(200)    NOT NULL, " +
                                         "email          VARCHAR(200)    NOT NULL, " +
-                                        "phone          VARCHAR(200)    NOT NULL, " +
-                                        "birthdate      DATE            NOT NULL, " +
+                                        "phone          VARCHAR(200)    NULL, " +
+                                        "birthdate      DATE            NULL, " +
                                         "elo            FLOAT           NULL, " + //se si iscrive un nuovo giocatore non ha l'elo 
                                         "PRIMARY KEY(id), " +
                                         "UNIQUE (nickname), " +
@@ -520,6 +520,27 @@ namespace bigTournamentManager
             }
             reader.Close();
             return points;
+        }
+
+        private bool InsertPlayerInDB(Player player)
+        {
+            bool success = true;
+            String sqlInsertPlayer = "INSERT INTO db_big_scuola.dbo.players (nickname, firstname, lastname, email, phone, bithdate) " +
+                                     "VALUES (@nk, @fn, @ln, @e)";
+            SqlCommand command = new SqlCommand(sqlInsertPlayer, myConnection);
+            command.Parameters.AddWithValue("@nk", player.Nickname);
+            command.Parameters.AddWithValue("@fn", player.FirstName);
+            command.Parameters.AddWithValue("@ln", player.LastName);
+            command.Parameters.AddWithValue("@e", player.Mail);
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch
+            {
+                success = false;
+            }
+            return success;
         }
     }
 }
